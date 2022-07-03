@@ -3,8 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Our Structures experience spans from the construction of bridges, reservoirs, chambers, water purification and wastewater treatment works, having constructed a number of major structures across the country.">
-    <meta name="keywords" content="projects Mayibuye i-afrika, mayibuye projects, Mayibuye i-afrika tenders, Mayibuye tenders">
+
     <meta name="generator" content="https://m-ifrika.co.za/m/contact-us">
     <meta name="author" content="Tafara Shamu">
     <meta itemprop="name" content="Mayibuye i-Afrika Trading">
