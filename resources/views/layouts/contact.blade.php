@@ -56,8 +56,8 @@
 <div class="container py-2">
     <div class="row justify-content-center font-12 text-center">
         <div class="col-sm-3 text-white col-mb-3"><i class="bi va bi-telephone-inbound"></i> +27 877 016 314</div>
-        {{-- <div class="col-sm-3 text-white col-mb-3"><i class="bi va bi-calculator"></i> +27 86 767 2586</div> --}}
-        <div class="col-sm-3 text-white col-mb-3"><i class="bi va bi-envelope"></i> admin<span class="text-blank">istrator</span>@m-iafrika.co.za</div>
+         <div class="col-sm-3 text-white col-mb-3"><i class="bi va bi-calculator"></i> +27 86 767 2586</div>
+{{--        <div class="col-sm-3 text-white col-mb-3"><i class="bi va bi-envelope"></i> admin<span class="text-blank">istrator</span>@m-iafrika.co.za</div>--}}
         <div class="col-sm-3 text-white col-mb-3"><i class="bi va bi-check2-circle"></i> B-BBEE LEVEL 1</div>
     </div>
 </div>

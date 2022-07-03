@@ -19,7 +19,6 @@
                           <br/>
                           <h2>Contact us.</h2>
                           <li>Tel: <a href="tel:+27 877 016 314">+27 877 016 314</a></li>
-                                                    <li>Cell: <a href="tel:+27 66 293 3086">+27 66 293 3086</a></li>
                           <li>Fax: <a href="tel:086 767 2586">086 767 2586</a></li>
                           <br/>
                         </ul>
