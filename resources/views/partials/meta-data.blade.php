@@ -28,7 +28,7 @@
     <meta name="generator" content="m-iafrika.co.za/">
     <meta name="author" content="Tafara Shamu">
     <meta itemprop="name" content="Projects - Mayibuye i-Afrika Trading">
-    <meta itemprop="url" content="https://m-iafrika.co.za/">
+    <meta itemprop="url" content="https://m-iafrika.co.za/m/projects">
     <meta property="og:url" content="https://m-iafrika.co.za/m/projects">
 
 @elseif(\Request::route()->getName() == 'blog.index')
@@ -44,8 +44,7 @@
     <meta name="keywords" content="Contact Mayibuye i-afrika, mayibuye , Mayibuye i-afrika, Mayibuye offices, Mayibuye contacts, Mayibuye direction, Mayibuye location, Mayibuye Headquaters">
     <meta name="generator" content="https://m-ifrika.co.za/m/contact-us">
     <meta itemprop="url" content="https://m-ifrika.co.za/m/contact-us">
-    <meta property="og:site_name" content="Mayibuye i-Afrika Trading">
-    <meta property="og:url" content="https://m-ifrika.co.za/">
+
 
 @elseif(\Request::route()->getName() == 'gallery')
 
