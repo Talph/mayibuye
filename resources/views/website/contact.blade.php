@@ -1,4 +1,4 @@
-@extends('layouts.contact')
+@extends('layouts.menu')
 
 @section('content')
 @include('partials.quick-contact')

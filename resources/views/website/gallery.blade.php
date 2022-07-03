@@ -1,4 +1,4 @@
-@extends('layouts.gallery')
+@extends('layouts.menu')
 
 @section('content')
 @include('partials.banners.banner')

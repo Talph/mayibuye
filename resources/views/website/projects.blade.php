@@ -4,7 +4,7 @@ $arrow = '<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-r
               </svg>';
 ?>
 
-@extends('layouts.projects')
+@extends('layouts.menu')
 
 @section('content')
 @include('partials.banners.banner')
