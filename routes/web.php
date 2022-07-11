@@ -19,23 +19,28 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {return view('website.welcome');})->name('welcome');
+Route::group(['middleware' => 'web'], function () {
+    Auth::routes();
+    Route::get('/', function () {
+        return view('website.welcome');
+    })->name('welcome');
+    Route::prefix('/m')->group(function () {
+        Route::get('about-us', 'HomeController@about')->name('about');
+        Route::prefix('/about-us')->group(function () {
+            Route::get('overview', 'HomeController@about')->name('overview');
+            Route::get('certifications-and-memberships', 'HomeController@certifications_memberships')->name('certs');
+            Route::get('the-director', 'HomeController@director')->name('director');
+            Route::get('the-team', 'HomeController@team')->name('team');
+        });
 
-Auth::routes();
+        Route::get('services', 'HomeController@services')->name('services');
+        Route::get('projects', 'ProjectController@index')->name('projects');
+        Route::get('gallery', 'HomeController@gallery')->name('gallery');
+        Route::post('contact', 'EmailController@contact_us')->name('contact-send');
+        Route::get('contact-us', 'HomeController@contact_page')->name('contact-us');
+    });
+});
 
-Route::get('m/about-us', 'HomeController@about')->name('about');
-Route::get('m/about-us/overview', 'HomeController@about')->name('overview');
-Route::get('m/about-us/certifications-and-memberships', 'HomeController@certifications_memberships')->name('certs');
-Route::get('m/about-us/the-director', 'HomeController@director')->name('director');
-Route::get('m/about-us/the-team', 'HomeController@team')->name('team');
-
-Route::get('m/services', 'HomeController@services')->name('services');
-
-Route::get('m/projects', 'ProjectController@index')->name('projects');
-Route::get('m/gallery', 'HomeController@gallery')->name('gallery');
-
-Route::post('m/contact', 'EmailController@contact_us')->name('contact-send');
-Route::get('m/contact-us', 'HomeController@contact_page')->name('contact-us');
 
 Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
     Route::prefix('/ad')->group(function () {
@@ -52,12 +57,14 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
 });
 
 Route::group(['middleware' => ['auth']], function () {
-    Route::get('/home', 'HomeController@index')->name('home');
-    Route::post('account/delete/{user}', [App\Http\Controllers\UserController::class, 'delete'])->name('account.delete');
-    Route::get('account/profile', [App\Http\Controllers\UserDetailsController::class, 'accountIndex'])->name('account.index');
-    Route::post('account/profile', [App\Http\Controllers\UserDetailsController::class, 'accountStore'])->name('account.store');
-    Route::get('account/security', [App\Http\Controllers\UserDetailsController::class, 'securityIndex'])->name('security.index');
-    Route::post('account/security', [App\Http\Controllers\UserDetailsController::class, 'securityStore'])->name('security.store');
-    Route::get('account/notifications', [App\Http\Controllers\UserDetailsController::class, 'notificationsIndex'])->name('notifications.index');
-    Route::post('account/notifications', [App\Http\Controllers\UserDetailsController::class, 'notificationsStore'])->name('notifications.store');
+    Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    Route::prefix('/account')->group(function () {
+        Route::post('delete/{user}', [App\Http\Controllers\UserController::class, 'delete'])->name('account.delete');
+        Route::get('profile', [App\Http\Controllers\UserDetailsController::class, 'accountIndex'])->name('account.index');
+        Route::post('profile', [App\Http\Controllers\UserDetailsController::class, 'accountStore'])->name('account.store');
+        Route::get('security', [App\Http\Controllers\UserDetailsController::class, 'securityIndex'])->name('security.index');
+        Route::post('security', [App\Http\Controllers\UserDetailsController::class, 'securityStore'])->name('security.store');
+        Route::get('notifications', [App\Http\Controllers\UserDetailsController::class, 'notificationsIndex'])->name('notifications.index');
+        Route::post('notifications', [App\Http\Controllers\UserDetailsController::class, 'notificationsStore'])->name('notifications.store');
+    });
 });
