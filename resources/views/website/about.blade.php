@@ -1,4 +1,4 @@
-@extends('layouts.about')
+@extends('layouts.menu')
 
 @section('content')
 @include('partials.banners.about-banner')
