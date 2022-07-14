@@ -7,11 +7,9 @@ class RoleService
 
     public function storeUserRole($user, $role): bool
     {
-        if (!$role) {
-            $user->relatedRoles()->attach(4); // sets role to 'user'
-        }
-
-        $user->relatedRoles()->attach($role);
+        $role
+            ?  $user->relatedRoles()->attach($role)
+            : $user->relatedRoles()->attach(4); // sets role to 'user'
 
         return true;
     }
