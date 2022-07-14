@@ -4,9 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProjectFormRequest;
-use App\Http\Services\CategoryAttachService;
+use App\Http\Services\AttachModelService;
 use App\Http\Services\ProjectService;
-use App\Models\BlogPost;
 use App\Models\Client;
 use App\Models\Project;
 use App\Models\ProjectCategory;
@@ -24,11 +23,11 @@ class ProjectController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return Response
+     * @return Application|Factory|View
      */
-    public function index()
+    public function index(): Application|Factory|View
     {
-        if(!\Auth::user()->hasRelatedRole('admin') && !\Auth::user()->hasRelatedRole('manager') && !\Auth::user()->hasRelatedRole('editor') )
+        if(!auth()->user()->hasRelatedRole('admin') && !auth()->user()->hasRelatedRole('manager') && !auth()->user()->hasRelatedRole('editor') )
         {
             $projects = Project::with('relatedUsers')->orderBy('id', 'desc')
                 ->paginate(10);
@@ -58,17 +57,17 @@ class ProjectController extends Controller
      * Store a newly created resource in storage.
      *
      * @param ProjectFormRequest $request
-     * @param CategoryAttachService $categoryService
+     * @param AttachModelService $attachModelService
      * @param ProjectService $projectService
      * @return RedirectResponse
      * @throws AuthorizationException
      */
-    public function store(ProjectFormRequest $request, CategoryAttachService $categoryService, ProjectService $projectService): RedirectResponse
+    public function store(ProjectFormRequest $request, AttachModelService $attachModelService, ProjectService $projectService): RedirectResponse
     {
         $this->authorize('store', Project::class);
 
         $project = $projectService->storeProject($request);
-        $category = $categoryService->attachCategory($project, $request->category_id);
+        $category = $attachModelService->attachModel($project, $request->get('category_id'), 'categories');
         if(!$category && !$project){
             return redirect()->route('projects.create')->with('err_message', 'Project could not be save something went wrong.');
         }
@@ -86,9 +85,9 @@ class ProjectController extends Controller
     public function edit(Project $project): View
     {
         $this->authorize('edit', Project::class);
-        $project = $project->with('relatedCategories')->first();
+        $project = $project->with(['relatedCategories', 'relatedClients'])->first();
         $categories = ProjectCategory::query()->get(['id', 'category_name']);
-        $clients = Client::query()->get(['id', 'company_name']);
+        $clients = Client::query()->get(['id', 'client_name']);
         return view('backend.dashboard.modules.projects.edit', [ 'project' => $project, 'categories' => $categories, 'clients' => $clients]);
     }
 
@@ -96,17 +95,17 @@ class ProjectController extends Controller
      * Update the specified resource in storage.
      *
      * @param ProjectFormRequest $request
-     * @param CategoryAttachService $categoryService
+     * @param AttachModelService $attachModelService
      * @param ProjectService $projectService
      * @return RedirectResponse
      * @throws AuthorizationException
      */
-    public function update(ProjectFormRequest $request, CategoryAttachService $categoryService, ProjectService $projectService): RedirectResponse
+    public function update(ProjectFormRequest $request, AttachModelService $attachModelService, ProjectService $projectService): RedirectResponse
     {
         $this->authorize('update', Project::class);
 
         $project = $projectService->storeProject($request);
-        $category = $categoryService->attachCategory($project, $request->category_id);
+        $category = $attachModelService->attachModel($project, $request->get('category_id'), 'categories');
         if(!$category && !$project){
             return redirect()->route('projects.create')->with('err_message', 'Project could not be save something went wrong.');
         }

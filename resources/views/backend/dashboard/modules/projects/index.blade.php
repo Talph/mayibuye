@@ -62,9 +62,7 @@
                     <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
                       aria-labelledby="dropdownMenuLinkProjects">
                       <div class="dropdown-header">Actions:</div>
-                      <a href="{{ url('/ad/projects/' . $project->id) }}" class="btn dropdown-item">View</a>
-
-                      @cannot('isManager')
+                         @cannot('isManager')
                       @can('edit', $project)
                       <a href="{{ url('/ad/projects/' . $project->id . '/edit') }}" class="btn dropdown-item">Edit</a>
                       @endcan
