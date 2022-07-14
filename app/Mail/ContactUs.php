@@ -12,15 +12,17 @@ class ContactUs extends Mailable
     use Queueable, SerializesModels;
     
     public $data;
+    public $files;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($data)
+    public function __construct($data, $files)
     {
         //
         $this->data = $data;
+        $this->files = $files;
     }
 
     /**
@@ -32,9 +34,9 @@ class ContactUs extends Mailable
     {
         return $this
         ->subject('Contact Form Online')
-        ->to('backoffice@aodigital.co.za')
+        ->to('support@afrfinity.com')
         ->from('online@m-afrika.co.za')
         ->view('emails.contact-us')
-        ->with('data', $this->data);
+        ->with(['data', $this->data, 'files', $this->files]);
     }
 }

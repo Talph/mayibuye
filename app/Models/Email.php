@@ -19,6 +19,6 @@ class Email extends Model implements HasMedia
         '__email',
         '__message',
         '__document',
-        '__terms'
+        'accepted_at'
     ];
 }
