@@ -53,6 +53,16 @@ class User extends Authenticatable implements HasMedia
         return $this->hasMany(Project::class, 'user_id');
     }
 
+    public function relatedClients(): HasMany
+    {
+        return $this->hasMany(Client::class, 'user_id');
+    }
+
+    public function relatedDetails(): HasMany
+    {
+        return $this->hasMany(UserDetails::class, 'user_id');
+    }
+
     /**
      * @return Collection
      */
@@ -61,7 +71,5 @@ class User extends Authenticatable implements HasMedia
         return $this->relatedProject()->get();
     }
 
-    public function relatedClients(){
-        return $this->hasMany(Client::class, 'user_id');
-    }
+
 }
