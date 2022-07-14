@@ -3,8 +3,10 @@
 namespace App\Providers;
 
 use App\Models\BlogPost;
+use App\Models\Email;
 use App\Models\Project;
 use App\Policies\ClientPolicy;
+use App\Policies\EmailPolicy;
 use App\Policies\PostPolicy;
 use App\Policies\ProjectPolicy;
 use http\Client;
@@ -23,6 +25,7 @@ class AuthServiceProvider extends ServiceProvider
         Project::class => ProjectPolicy::class,
         BlogPost::class => PostPolicy::class,
         Client::class => ClientPolicy::class,
+        Email::class => EmailPolicy::class,
     ];
 
     /**
