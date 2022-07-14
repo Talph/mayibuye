@@ -8,11 +8,15 @@ use App\Http\Services\ClientService;
 use App\Http\Services\IndustryAttachService;
 use App\Http\Services\Media\MediaFileService;
 use App\Http\Services\SolutionAttachService;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Models\Client;
 use App\Models\Solution;
 use App\Models\Industry;
+use Illuminate\Http\Response;
 
 class ClientController extends Controller
 {
@@ -24,9 +28,9 @@ class ClientController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Application|Factory|View
      */
-    public function index()
+    public function index(): View|Factory|Application
     {
         $clients = Client::with('relatedUser')->orderBy('id', 'desc')->paginate(10);
         return view('backend.dashboard.modules.clients.index', ['clients' => $clients]);
@@ -35,9 +39,9 @@ class ClientController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Application|Factory|View
      */
-    public function create()
+    public function create(): View|Factory|Application
     {
         $solutions = Solution::all();
         $industries = Industry::all();
@@ -47,11 +51,14 @@ class ClientController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param ClientFormRequest $request
+     * @param ClientService $clientService
+     * @param MediaFileService $mediaFileService
+     * @param AttachModelService $attachModelService
+     * @return RedirectResponse
      */
     public function store(ClientFormRequest $request,ClientService $clientService, MediaFileService $mediaFileService,
-                          IndustryAttachService $industryAttachService, SolutionAttachService $solutionAttachService)
+                          AttachModelService $attachModelService): RedirectResponse
     {
         $client = $clientService->storeClient(
             $request
@@ -83,8 +90,8 @@ class ClientController extends Controller
             'project-images'
         );
 
-        $industryAttachService->attachCategory($client, (array)$request->get('industry_id'));
-        $solutionAttachService->attachSolution($client, $request->get('solution_id'));
+        $attachModelService->attachModel($client, $request->get('industry_id'), 'industries');
+        $attachModelService->attachModel($client, $request->get('solution_id'), 'solutions');
 
         // $request->session()->flash('message', 'Successfully created client');
         return redirect()->back()->with('message', 'Successfully created client');
@@ -93,10 +100,10 @@ class ClientController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Client $client
+     * @return Application|Factory|View
      */
-    public function show(Client $client)
+    public function show(Client $client): View|Factory|Application
     {
          return view('backend.dashboard.modules.clients.show', [ 'client' => $client->with('relatedUser')->first() ]);
     }
@@ -104,8 +111,8 @@ class ClientController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Client $client
+     * @return Application|Factory|View
      */
     public function edit(Client $client)
     {
@@ -117,12 +124,15 @@ class ClientController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param ClientFormRequest $request
+     * @param ClientService $clientService
+     * @param MediaFileService $mediaFileService
+     * @param IndustryAttachService $industryAttachService
+     * @param SolutionAttachService $solutionAttachService
+     * @return RedirectResponse
      */
     public function update(ClientFormRequest $request,ClientService $clientService, MediaFileService $mediaFileService,
-                           IndustryAttachService $industryAttachService, SolutionAttachService $solutionAttachService)
+                           IndustryAttachService $industryAttachService, SolutionAttachService $solutionAttachService): RedirectResponse
     {
 
         $client = $clientService->storeClient(
