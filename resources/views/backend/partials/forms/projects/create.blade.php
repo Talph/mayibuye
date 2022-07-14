@@ -56,22 +56,22 @@
                         <div class="col-md-4">
                             <label>Start Date</label>
                             <input class="form-control" type="date" placeholder="{{ __('Start date') }}"
-                                   value="{{old('start_date')}}" name="start_date" required autofocus>
+                                   value="@if(!$project){{old('start_date')}}@else{{$project->start_date}}@endif" name="start_date" required autofocus>
                         </div>
 
                         <div class="col-md-4">
                             <label>Completion Date</label>
                             <input class="form-control" type="date" placeholder="{{ __('Completion date') }}"
-                                   value="{{old('end_date')}}" name="end_date" required autofocus>
+                                   value="@if(!$project){{old('end_date')}}@else{{$project->end_date}}@endif" name="end_date" required autofocus>
                         </div>
                         <div class="col-md-4">
                             <label>Project status</label>
                             <select class="form-control" name="project_status" required autofocus>
                                 <option value="">select option</option>
-                                <option value="in progress">In progress</option>
-                                <option value="on hold">On hold</option>
-                                <option value="completed">Completed</option>
-                                <option value="cancelled">Cancelled</option>
+                                <option value="in progress" {{str_contains($project->project_status, 'in progress') ? 'selected' : ''}}>In progress</option>
+                                <option value="on hold" {{str_contains($project->project_status, 'on hold') ? 'selected' : ''}}>On hold</option>
+                                <option value="completed" {{str_contains($project->project_status, 'completed') ? 'selected' : ''}}>Completed</option>
+                                <option value="cancelled" {{str_contains($project->project_status, 'cancelled') ? 'selected' : ''}}>Cancelled</option>
                             </select>
                         </div>
                     </div>
@@ -105,10 +105,12 @@
 
                         </select>
                     </div>
+                    @if(!$project)
                     <div class="form-group">
                         <label>Publish date</label>
-                        <input type="date" class="form-control" name="posted_at"/>
+                        <input type="date" class="form-control" name="posted_at" value="{{old('posted_at')}}"/>
                     </div>
+                    @endif
                     <button class="btn btn-block btn-success" type="submit">{{ __('Save') }}</button>
                 </div>
             </div>
