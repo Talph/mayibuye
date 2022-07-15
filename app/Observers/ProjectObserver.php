@@ -14,11 +14,6 @@ class ProjectObserver
      */
     public function creating(Project $project): void
     {
-            $slug = \Str::slug($project->project_name);
-            $count = Project::whereRaw("slug RLIKE '^{$slug}(-[0-9]+)?$'")->withTrashed()->count();
-            if($project->id != $count->id){
-                $project->slug = $count ? "{$slug}-{$count}" : $slug;
-            }
 
     }
 
@@ -31,10 +26,10 @@ class ProjectObserver
     public function updating(Project $project): void
     {
                 $slug = \Str::slug($project->slug);
-                $count = Project::whereRaw("slug RLIKE '^{$slug}(-[0-9]+)?$'")->withTrashed()->count();
-                if($project->id != $count->id){
-                    $project->slug = $count ? "{$slug}-{$count}" : $slug;
-                }
+                $count = Project::whereNotIn('id', [$project->id])->whereRaw("slug RLIKE '^{$slug}(-[0-9]+)?$'")->withTrashed()->count();
+                dd($count);
+                $project->slug = $count ? "{$slug}-{$count}" : $slug;
+
 
     }
     /**
