@@ -9,6 +9,10 @@ class AttachModelService
 {
     public function attachModel(Model $model, mixed $attachments, string $attachmentType): bool
     {
+        if(!$attachments){
+            return true;
+        }
+
         switch ($attachmentType) {
             case 'categories' :
                 Arr::map($attachments, function ($category) use ($model) {

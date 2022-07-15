@@ -6,22 +6,19 @@ use App\Models\Project;
 
 class ProjectService
 {
-public function storeProject(mixed $request){
-    return Project::updateOrCreate(
-        [
-            'id' => $request->id,
-        ],[
-        'project_name' => $request->project_name,
-        'project_number' => $request->project_name,
-        'project_desc' => $request->project_desc,
-        'client_id' => $request->client_id,
-        'project_value' => $request->project_value,
-        'start_date' => $request->start_date,
-        'end_date' => $request->end_date,
-        'project_status' => $request->project_status,
-        'meta_desc' => $request->meta_desc,
-        'is_published' => $request->is_published,
-        'posted_at' => $request->posted_at ?? now()->toDateTimeString(),
+public function storeProject(Project $project, mixed $request){
+    return $project->updateOrCreate([
+        'project_name' => $request->get('project_name'),
+        'project_number' => $request->get('project_name'),
+        'project_desc' => $request->get('project_desc'),
+        'client_id' => $request->get('client_id'),
+        'project_value' => $request->get('project_value'),
+        'start_date' => $request->get('start_date'),
+        'end_date' => $request->get('end_date'),
+        'project_status' => $request->get('project_status'),
+        'meta_desc' => $request->get('meta_desc'),
+        'is_published' => $request->get('is_published') == 1,
+        'posted_at' => $request->get('posted_at') ?? now()->toDateTimeString(),
         'user_id' => auth()->user()->id,
     ]);
 }

@@ -66,7 +66,8 @@ class ProjectController extends Controller
     {
         $this->authorize('store', Project::class);
 
-        $project = $projectService->storeProject($request);
+        $project = $projectService->storeProject(new Project(), $request);
+
         $category = $attachModelService->attachModel($project, $request->get('category_id'), 'categories');
         if(!$category && !$project){
             return redirect()->route('projects.create')->with('err_message', 'Project could not be save something went wrong.');
@@ -100,13 +101,15 @@ class ProjectController extends Controller
      * @return RedirectResponse
      * @throws AuthorizationException
      */
-    public function update(ProjectFormRequest $request, AttachModelService $attachModelService, ProjectService $projectService): RedirectResponse
+    public function update(ProjectFormRequest $request, AttachModelService $attachModelService,ProjectService $projectService, Project $project): RedirectResponse
     {
         $this->authorize('update', Project::class);
 
-        $project = $projectService->storeProject($request);
+        $projectUpdate = $projectService->storeProject($project, $request);
+
         $category = $attachModelService->attachModel($project, $request->get('category_id'), 'categories');
-        if(!$category && !$project){
+
+        if(!$category && !$projectUpdate){
             return redirect()->route('projects.create')->with('err_message', 'Project could not be save something went wrong.');
         }
 

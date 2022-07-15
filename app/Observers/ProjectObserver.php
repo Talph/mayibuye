@@ -7,7 +7,7 @@ use App\Models\Project;
 class ProjectObserver
 {
     /**
-     * Handle the Project "created" event.
+     * Handle the Project "creating" event.
      *
      * @param Project $project
      * @return void
@@ -16,12 +16,14 @@ class ProjectObserver
     {
             $slug = \Str::slug($project->project_name);
             $count = Project::whereRaw("slug RLIKE '^{$slug}(-[0-9]+)?$'")->withTrashed()->count();
-            $project->slug = $count ? "{$slug}-{$count}" : $slug;
+            if($project->id != $count->id){
+                $project->slug = $count ? "{$slug}-{$count}" : $slug;
+            }
 
     }
 
     /**
-     * Handle the Project "created" event.
+     * Handle the Project "updating" event.
      *
      * @param Project $project
      * @return void
@@ -30,7 +32,10 @@ class ProjectObserver
     {
                 $slug = \Str::slug($project->slug);
                 $count = Project::whereRaw("slug RLIKE '^{$slug}(-[0-9]+)?$'")->withTrashed()->count();
-                $project->slug = $count ? "{$slug}-{$count}" : $slug;
+                if($project->id != $count->id){
+                    $project->slug = $count ? "{$slug}-{$count}" : $slug;
+                }
+
     }
     /**
      * Handle the Project "created" event.
