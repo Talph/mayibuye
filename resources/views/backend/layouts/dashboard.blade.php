@@ -81,7 +81,7 @@
             var str = $('#J_name').val();
             str = str.replace(/\W+(?!$)/g, '-').toLowerCase();
             $('#J_slug').val(str);
-            $('#J_slug').attr('placeholder', str);
+            $('#J_slug').attr('value', str);
         });
     });
 </script>
