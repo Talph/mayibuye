@@ -6,7 +6,6 @@
         <div class="animated fadeIn">
             <!-- Page Heading -->
             <h1 class="h3 mb-2 text-gray-800">Edit Project </h1>
-
             <div class="createProduct my-4">
                 <a class="btn btn-primary" href={{route('projects.create')}}>{{__('Create New Project')}}</a>
             </div>
@@ -17,8 +16,7 @@
             </form>
         </div>
     </div>
-
+    @include('backend.partials.forms.categories.create-modal')
 @endsection
-
 @section('scripts')
 @endsection

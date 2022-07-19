@@ -17,6 +17,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Gate;
 
 class ProjectController extends Controller
 {
@@ -27,13 +28,9 @@ class ProjectController extends Controller
      */
     public function index(): Application|Factory|View
     {
-        if(!auth()->user()->hasRelatedRole('admin') && !auth()->user()->hasRelatedRole('manager') && !auth()->user()->hasRelatedRole('editor') )
-        {
-            $projects = Project::with('relatedUsers')->orderBy('id', 'desc')
-                ->paginate(10);
-        }
-        else
-        {
+        if(!auth()->user()->hasRelatedRole('admin') && !auth()->user()->hasRelatedRole('manager') && !auth()->user()->hasRelatedRole('editor') ){
+            $projects = Project::with('relatedUsers')->orderBy('id', 'desc')->paginate(10);
+        }else{
             $projects = Project::orderBy('id', 'desc')->paginate(10);
         }
         return view('backend.dashboard.modules.projects.index', ['projects' => $projects]);
@@ -43,6 +40,7 @@ class ProjectController extends Controller
      * Show the form for creating a new resource.
      *
      * @return Application|Factory|View
+     * @throws AuthorizationException
      */
     public function create(): View|Factory|Application
     {
@@ -50,6 +48,7 @@ class ProjectController extends Controller
         $categories = ProjectCategory::query()->get();
         $clients = Client::query()->get();
         $project = [];
+
         return view('backend.dashboard.modules.projects.create', [ 'project'=>$project, 'categories' => $categories, 'clients'=>$clients]);
     }
 
@@ -65,9 +64,7 @@ class ProjectController extends Controller
     public function store(ProjectFormRequest $request, AttachModelService $attachModelService, ProjectService $projectService): RedirectResponse
     {
         $this->authorize('store', Project::class);
-
         $project = $projectService->storeProject(new Project(), $request);
-
         $category = $attachModelService->attachModel($project, $request->get('category_id'), 'categories');
         if(!$category && !$project){
             return redirect()->route('projects.create')->with('err_message', 'Project could not be save something went wrong.');
@@ -79,7 +76,7 @@ class ProjectController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param Project $project
+     * @param $id
      * @return View
      * @throws AuthorizationException
      */
@@ -89,6 +86,7 @@ class ProjectController extends Controller
         $project = Project::where('id',$id)->with(['relatedCategories', 'relatedClients'])->first();
         $categories = ProjectCategory::query()->get(['id', 'category_name']);
         $clients = Client::query()->get(['id', 'client_name']);
+
         return view('backend.dashboard.modules.projects.edit', [ 'project' => $project, 'categories' => $categories, 'clients' => $clients]);
     }
 
@@ -98,17 +96,15 @@ class ProjectController extends Controller
      * @param ProjectFormRequest $request
      * @param AttachModelService $attachModelService
      * @param ProjectService $projectService
+     * @param Project $project
      * @return RedirectResponse
      * @throws AuthorizationException
      */
     public function update(ProjectFormRequest $request, AttachModelService $attachModelService,ProjectService $projectService, Project $project): RedirectResponse
     {
         $this->authorize('update', Project::class);
-
         $projectUpdate = $projectService->storeProject($project, $request);
-
         $category = $attachModelService->attachModel($project, $request->get('category_id'), 'categories');
-
         if(!$category && !$projectUpdate){
             return redirect()->route('projects.create')->with('err_message', 'Project could not be save something went wrong.');
         }

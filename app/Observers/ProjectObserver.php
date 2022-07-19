@@ -28,7 +28,7 @@ class ProjectObserver
      */
     public function updating(Project $project): void
     {
-        $slug = $project->slug ? Str::slug($project->slug) : Str::slug(strtolower($project->project_name));
+        $slug = $project->slug ? Str::slug(strtolower($project->project_name)) : Str::slug($project->slug);
         $count = Project::whereNotIn('id', [$project->id])->whereRaw("slug RLIKE '^{$slug}(-[0-9]+)?$'")->withTrashed()->count();
         $project->slug = $count ? "{$slug}-{$count}" : $slug;
     }
