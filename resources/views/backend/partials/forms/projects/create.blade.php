@@ -15,8 +15,8 @@
                             <input class="form-control" type="text" id="J_name" placeholder="{{ __('Project Name') }}"
                                    value="@if(!$project){{old('project_name')}}@else{{$project->project_name}}@endif"
                                    name="project_name" required autofocus>
-                            <span class="small mt-1">Slug:</span> <span id="J_slug" class="border-0">
-                            </span>
+                            <span class="small mt-1">Slug:</span>
+                            <input id="J_slug" class="border-0 form-control" value="@if(!$project){{old('slug')}}@else{{$project->slug}}@endif" name="slug"/>
                         </div>
                         <div class="col-md-6">
                             <label>Project Number / Contract Number</label>
@@ -30,11 +30,7 @@
                         <div class="col-md-12">
                             <label>Project Description</label>
                             <textarea class="form-control" id="summernote" name="project_desc" rows="3"
-                                      required> @if(!$project)
-                                    {{old('project_desc')}}
-                                @else
-                                    {{$project->project_desc}}
-                                @endif</textarea>
+                                      required>@if(!$project){{old('project_desc')}}@else{{$project->project_desc}}@endif</textarea>
                         </div>
                     </div>
                 </div>
@@ -117,9 +113,9 @@
                     <div class="form-group">
                         <label>Ready to publish ?</label>
                         <select class="form-control" name="is_published">
-                            <option selected value="0">Draft</option>
+                            <option value="0">Draft</option>
                             @canany(['isAdmin', 'isManager'])
-                                <option value="1">Publish</option>
+                                <option value="1" @if($project){{$project->is_published == 1 ? 'selected' : ''}}@endif>Publish</option>
                             @endcanany
                             @can('isUser')
                                 <option value="2">Send for approval</option>

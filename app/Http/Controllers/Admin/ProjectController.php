@@ -83,10 +83,10 @@ class ProjectController extends Controller
      * @return View
      * @throws AuthorizationException
      */
-    public function edit(Project $project): View
+    public function edit($id): View
     {
         $this->authorize('edit', Project::class);
-        $project = $project->with(['relatedCategories', 'relatedClients'])->first();
+        $project = Project::where('id',$id)->with(['relatedCategories', 'relatedClients'])->first();
         $categories = ProjectCategory::query()->get(['id', 'category_name']);
         $clients = Client::query()->get(['id', 'client_name']);
         return view('backend.dashboard.modules.projects.edit', [ 'project' => $project, 'categories' => $categories, 'clients' => $clients]);

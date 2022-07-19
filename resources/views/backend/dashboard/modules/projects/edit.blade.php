@@ -11,7 +11,6 @@
                 <a class="btn btn-primary" href={{route('projects.create')}}>{{__('Create New Project')}}</a>
             </div>
             <form method="POST" enctype="multipart/form-data" action="{{route('projects.update', [$project->id])}}">
-                <input hidden name="id" value="{{$project->id}}">
                 @csrf
                 @method('PUT')
                 @include('backend.partials.forms.projects.create')

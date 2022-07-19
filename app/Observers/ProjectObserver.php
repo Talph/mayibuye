@@ -3,6 +3,7 @@
 namespace App\Observers;
 
 use App\Models\Project;
+use Illuminate\Support\Str;
 
 class ProjectObserver
 {
@@ -14,7 +15,10 @@ class ProjectObserver
      */
     public function creating(Project $project): void
     {
-
+//        dd($project->slug,strtolower($project->project_name), $project, 'creating');
+        $slug = $project->slug ? Str::slug($project->slug) : Str::slug(strtolower($project->project_name));
+        $count = Project::whereNotIn('id', [$project->id])->whereRaw("slug RLIKE '^{$slug}(-[0-9]+)?$'")->withTrashed()->count();
+        $project->slug = $count ? "{$slug}-{$count}" : $slug;
     }
 
     /**
@@ -25,12 +29,10 @@ class ProjectObserver
      */
     public function updating(Project $project): void
     {
-                $slug = \Str::slug($project->slug);
-                $count = Project::whereNotIn('id', [$project->id])->whereRaw("slug RLIKE '^{$slug}(-[0-9]+)?$'")->withTrashed()->count();
-                dd($count);
-                $project->slug = $count ? "{$slug}-{$count}" : $slug;
-
-
+//        dd($project->slug,strtolower($project->project_name), $project, 'updating');
+        $slug = $project->slug ? Str::slug($project->slug) : Str::slug(strtolower($project->project_name));
+        $count = Project::whereNotIn('id', [$project->id])->whereRaw("slug RLIKE '^{$slug}(-[0-9]+)?$'")->withTrashed()->count();
+        $project->slug = $count ? "{$slug}-{$count}" : $slug;
     }
     /**
      * Handle the Project "created" event.
