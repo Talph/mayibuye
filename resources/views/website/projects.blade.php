@@ -27,10 +27,7 @@ $arrow = '<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-r
 </div>
 
 @include('partials.project-table')
-       
 
-               
-                {{-- <project-component></project-component> --}}
  <div class="project-section mt-5 shadow">
 <div class="row">
 

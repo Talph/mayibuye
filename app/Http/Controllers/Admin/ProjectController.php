@@ -66,7 +66,8 @@ class ProjectController extends Controller
     {
         $this->authorize('store', Project::class);
 
-        $project = $projectService->storeProject($request);
+        $project = $projectService->storeProject(new Project(), $request);
+
         $category = $attachModelService->attachModel($project, $request->get('category_id'), 'categories');
         if(!$category && !$project){
             return redirect()->route('projects.create')->with('err_message', 'Project could not be save something went wrong.');
@@ -82,10 +83,10 @@ class ProjectController extends Controller
      * @return View
      * @throws AuthorizationException
      */
-    public function edit(Project $project): View
+    public function edit($id): View
     {
         $this->authorize('edit', Project::class);
-        $project = $project->with(['relatedCategories', 'relatedClients'])->first();
+        $project = Project::where('id',$id)->with(['relatedCategories', 'relatedClients'])->first();
         $categories = ProjectCategory::query()->get(['id', 'category_name']);
         $clients = Client::query()->get(['id', 'client_name']);
         return view('backend.dashboard.modules.projects.edit', [ 'project' => $project, 'categories' => $categories, 'clients' => $clients]);
@@ -100,13 +101,15 @@ class ProjectController extends Controller
      * @return RedirectResponse
      * @throws AuthorizationException
      */
-    public function update(ProjectFormRequest $request, AttachModelService $attachModelService, ProjectService $projectService): RedirectResponse
+    public function update(ProjectFormRequest $request, AttachModelService $attachModelService,ProjectService $projectService, Project $project): RedirectResponse
     {
         $this->authorize('update', Project::class);
 
-        $project = $projectService->storeProject($request);
+        $projectUpdate = $projectService->storeProject($project, $request);
+
         $category = $attachModelService->attachModel($project, $request->get('category_id'), 'categories');
-        if(!$category && !$project){
+
+        if(!$category && !$projectUpdate){
             return redirect()->route('projects.create')->with('err_message', 'Project could not be save something went wrong.');
         }
 
