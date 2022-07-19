@@ -27,8 +27,8 @@
                                         <input class="form-control" type="text" id="J_name"
                                             placeholder="{{ __('Name') }}" value="{{old('client_name')}}" name="client_name"
                                             required autofocus>
-                                        <span class="small mt-1">Slug:</span> <input id="J_slug"
-                                            class="border-0 form-control" placeholder="" />
+                                        <span class="small mt-1">Slug:</span>
+                                        <input id="J_slug" class="border-0 form-control" name="slug"/>
                                     </div>
                                     <div class="col-md-4 mt-3">
                                         <div class="input-group mt-3">
