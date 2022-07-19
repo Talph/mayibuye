@@ -7,6 +7,12 @@ use Illuminate\Support\Arr;
 
 class AttachModelService
 {
+    /**
+     * @param Model $model
+     * @param mixed $attachments
+     * @param string $attachmentType
+     * @return bool
+     */
     public function attachModel(Model $model, mixed $attachments, string $attachmentType): bool
     {
         if(!$attachments){
