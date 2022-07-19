@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ClientFormRequest;
+use App\Http\Services\AttachModelService;
 use App\Http\Services\ClientService;
 use App\Http\Services\IndustryAttachService;
 use App\Http\Services\Media\MediaFileService;
@@ -20,11 +21,6 @@ use Illuminate\Http\Response;
 
 class ClientController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     /**
      * Display a listing of the resource.
      *
