@@ -6,18 +6,15 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ClientFormRequest;
 use App\Http\Services\AttachModelService;
 use App\Http\Services\ClientService;
-use App\Http\Services\IndustryAttachService;
 use App\Http\Services\Media\MediaFileService;
-use App\Http\Services\SolutionAttachService;
+use Exception;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use App\Models\Client;
 use App\Models\Solution;
 use App\Models\Industry;
-use Illuminate\Http\Response;
 
 class ClientController extends Controller
 {
@@ -56,40 +53,21 @@ class ClientController extends Controller
     public function store(ClientFormRequest $request,ClientService $clientService, MediaFileService $mediaFileService,
                           AttachModelService $attachModelService): RedirectResponse
     {
-        $client = $clientService->storeClient(
-            $request
-        );
+        try{
+            $client = $clientService->storeClient(new Client, $request);
 
-        // Upload company logo
-        $mediaFileService->fileUpload(
-            $client,
-            $request->file('client_logo'),
-            'logos'
-        );
+            $mediaFileService->fileUpload($client, $request->file('client_logo'),'logos'); // Upload company logo
+            $mediaFileService->fileUpload($client, $request->file('example_one'),'project-images'); //Upload example one
+            $mediaFileService->fileUpload($client, $request->file('example_two'),'project-images'); //Upload example two
+            $mediaFileService->fileUpload($client, $request->file('example_three'),'project-images'); //Upload example three
 
-        //Upload example one
-        $mediaFileService->fileUpload(
-            $client,
-            $request->file('example_one'),
-            'project-images'
-        );
+            $attachModelService->attachModel($client, $request->get('industry_id'), 'industries');
+            $attachModelService->attachModel($client, $request->get('solution_id'), 'solutions');
+        }
+        catch (Exception $e){
+            return redirect()->back()->with('err_message', $e->getMessage());
+        }
 
-        //Upload example two
-        $mediaFileService->fileUpload(
-            $client, $request->file('example_two'),
-            'project-images'
-        );
-
-        //Upload example three
-        $mediaFileService->fileUpload(
-            $client, $request->file('example_three'),
-            'project-images'
-        );
-
-        $attachModelService->attachModel($client, $request->get('industry_id'), 'industries');
-        $attachModelService->attachModel($client, $request->get('solution_id'), 'solutions');
-
-        // $request->session()->flash('message', 'Successfully created client');
         return redirect()->back()->with('message', 'Successfully created client');
     }
 
@@ -110,10 +88,10 @@ class ClientController extends Controller
      * @param Client $client
      * @return Application|Factory|View
      */
-    public function edit(Client $client)
+    public function edit(Client $client): View|Factory|Application
     {
-        $solutions = Solution::get(['id','solution_name']);
-        $industries = Industry::get(['id','industry_name']);
+        $solutions = Solution::query()->get(['id','solution_name']);
+        $industries = Industry::query()->get(['id','industry_name']);
         return view('backend.dashboard.modules.clients.edit', [ 'solutions' => $solutions, 'client' => $client, 'industries'=> $industries ]);
     }
 
@@ -123,27 +101,21 @@ class ClientController extends Controller
      * @param ClientFormRequest $request
      * @param ClientService $clientService
      * @param MediaFileService $mediaFileService
-     * @param IndustryAttachService $industryAttachService
-     * @param SolutionAttachService $solutionAttachService
+     * @param AttachModelService $attachModelService
+     * @param Client $client
      * @return RedirectResponse
      */
-    public function update(ClientFormRequest $request,ClientService $clientService, MediaFileService $mediaFileService,
-                           IndustryAttachService $industryAttachService, SolutionAttachService $solutionAttachService): RedirectResponse
+    public function update(ClientFormRequest $request,ClientService $clientService, MediaFileService $mediaFileService, AttachModelService $attachModelService, Client $client): RedirectResponse
     {
-
-        $client = $clientService->storeClient(
-            $request
-        );
-
-        // Upload company logo
-        $mediaFileService->fileUpload(
-            $client,
-            $request->file('client_logo'),
-            'logos'
-        );
-
-        $industryAttachService->attachCategory($client, (array)$request->get('industry_id'));
-        $solutionAttachService->attachSolution($client, $request->get('solution_id'));
+        try{
+            $client = $clientService->storeClient($client,$request);
+            // Upload company logo
+            $mediaFileService->fileUpload($client, $request->file('client_logo'), 'logos');
+            $attachModelService->attachModel($client, (array)$request->get('industry_id'), 'industries');
+            $attachModelService->attachModel($client, $request->get('solution_id'), 'industries');
+        }catch (Exception $e){
+            return redirect()->back()->with('err_message', $e->getMessage());
+        }
 
         return redirect()->back()->with('message', 'Successfully updated client');
     }
@@ -156,9 +128,14 @@ class ClientController extends Controller
      */
     public function destroy(Client $client): RedirectResponse
     {
-        $client->delete();
-        $client->relatedSolutions()->detach($client->id);
-        $client->relatedIndustries()->detach($client->id);
+        try{
+            $client->delete();
+            $client->relatedSolutions()->detach();
+            $client->relatedIndustries()->detach();
+        }
+        catch (Exception $e){
+            return redirect()->route('clients.index')->with('err_message', $e->getMessage());
+        }
         return redirect()->route('clients.index')->with('message', 'Successfully deleted');
     }
     

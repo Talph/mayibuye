@@ -9,14 +9,12 @@ use App\Http\Services\ProjectService;
 use App\Models\Client;
 use App\Models\Project;
 use App\Models\ProjectCategory;
-use Carbon\Carbon;
+use Exception;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 
 class ProjectController extends Controller
 {
@@ -27,15 +25,7 @@ class ProjectController extends Controller
      */
     public function index(): Application|Factory|View
     {
-        if(!auth()->user()->hasRelatedRole('admin') && !auth()->user()->hasRelatedRole('manager') && !auth()->user()->hasRelatedRole('editor') )
-        {
-            $projects = Project::with('relatedUsers')->orderBy('id', 'desc')
-                ->paginate(10);
-        }
-        else
-        {
-            $projects = Project::orderBy('id', 'desc')->paginate(10);
-        }
+        $projects = Project::query()->with('relatedUsers')->orderBy('id', 'desc')->paginate(10);
         return view('backend.dashboard.modules.projects.index', ['projects' => $projects]);
     }
 
@@ -43,6 +33,7 @@ class ProjectController extends Controller
      * Show the form for creating a new resource.
      *
      * @return Application|Factory|View
+     * @throws AuthorizationException
      */
     public function create(): View|Factory|Application
     {
@@ -65,11 +56,12 @@ class ProjectController extends Controller
     public function store(ProjectFormRequest $request, AttachModelService $attachModelService, ProjectService $projectService): RedirectResponse
     {
         $this->authorize('store', Project::class);
-
-        $project = $projectService->storeProject($request);
-        $category = $attachModelService->attachModel($project, $request->get('category_id'), 'categories');
-        if(!$category && !$project){
-            return redirect()->route('projects.create')->with('err_message', 'Project could not be save something went wrong.');
+        try{
+            $project = $projectService->storeProject(new Project, $request);
+            $attachModelService->attachModel($project, $request->get('category_id'), 'categories');
+        }
+        catch(Exception $e){
+            return redirect()->route('projects.create')->with('err_message', $e->getMessage());
         }
 
         return redirect()->route('projects.index')->with('message', 'Project successfully created.');
@@ -85,6 +77,7 @@ class ProjectController extends Controller
     public function edit(Project $project): View
     {
         $this->authorize('edit', Project::class);
+
         $project = $project->with(['relatedCategories', 'relatedClients'])->first();
         $categories = ProjectCategory::query()->get(['id', 'category_name']);
         $clients = Client::query()->get(['id', 'client_name']);
@@ -97,17 +90,21 @@ class ProjectController extends Controller
      * @param ProjectFormRequest $request
      * @param AttachModelService $attachModelService
      * @param ProjectService $projectService
+     * @param Project $project
      * @return RedirectResponse
      * @throws AuthorizationException
      */
-    public function update(ProjectFormRequest $request, AttachModelService $attachModelService, ProjectService $projectService): RedirectResponse
+    public function update(ProjectFormRequest $request, AttachModelService $attachModelService, ProjectService $projectService, Project $project): RedirectResponse
     {
         $this->authorize('update', Project::class);
 
-        $project = $projectService->storeProject($request);
-        $category = $attachModelService->attachModel($project, $request->get('category_id'), 'categories');
-        if(!$category && !$project){
-            return redirect()->route('projects.create')->with('err_message', 'Project could not be save something went wrong.');
+        try{
+            $projectService->storeProject($project, $request);
+            $attachModelService->attachModel($project, $request->get('category_id'), 'categories');
+        }
+        catch (Exception $e){
+
+            return redirect()->route('projects.create')->with('err_message', $e->getMessage());
         }
 
         return redirect()->route('projects.index')->with('message', 'Project successfully created.');
@@ -122,7 +119,7 @@ class ProjectController extends Controller
     public function destroy(Project $project): RedirectResponse
     {
         $project->delete();
-        $project->relatedCategories()->detach($project->id);
+        $project->relatedCategories()->detach();
 
         return back()->with('err_message', 'Project deleted successfully.');
     }
