@@ -15,6 +15,7 @@ use Illuminate\Http\RedirectResponse;
 use App\Models\Client;
 use App\Models\Solution;
 use App\Models\Industry;
+use Illuminate\Http\Request;
 
 class ClientController extends Controller
 {
@@ -107,21 +108,23 @@ class ClientController extends Controller
      */
     public function update(ClientFormRequest $request,ClientService $clientService, MediaFileService $mediaFileService, AttachModelService $attachModelService, Client $client): RedirectResponse
     {
-        try{
-            $client = $clientService->storeClient($client,$request);
+        try {
+            $client = $clientService->storeClient($client, $request);
             // Upload company logo
             $mediaFileService->fileUpload($client, $request->file('client_logo'), 'logos');
             $attachModelService->attachModel($client, (array)$request->get('industry_id'), 'industries');
             $attachModelService->attachModel($client, $request->get('solution_id'), 'industries');
-        }catch (Exception $e){
+        } catch (Exception $e) {
             return redirect()->back()->with('err_message', $e->getMessage());
         }
 
         return redirect()->back()->with('message', 'Successfully updated client');
+    }
 
-    public function uploadLogo (MediaFileService $mediaFileService, Client $client, Request $request){
+    public function uploadLogo (MediaFileService $mediaFileService, Client $client, Request $request): RedirectResponse
+    {
         // Upload company logo
-        $uploaded = $mediaFileService->fileUpload(
+        $mediaFileService->fileUpload(
             $client,
             $request->file('client_logo'),
             'logos'
