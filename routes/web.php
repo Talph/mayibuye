@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\BlogCategoryController;
 use App\Http\Controllers\Admin\BlogPostController;
+use App\Http\Controllers\Admin\ClientController;
 use App\Http\Controllers\Admin\EmailController;
 use App\Http\Controllers\Admin\ProjectCategoryController;
 use App\Http\Controllers\Admin\RolesController;
@@ -53,6 +54,7 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
         Route::resource('roles', RolesController::class);
         Route::resource('users', UserController::class);
         Route::resource('emails', EmailController::class);
+        Route::post('{client:slug}/client-logo-update', [ClientController::class, 'uploadLogo'])->name('image.store');
     });
 });
 
