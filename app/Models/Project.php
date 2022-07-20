@@ -29,6 +29,9 @@ class Project extends Model implements HasMedia
         return $this->belongsTo(User::class, 'user_id');
     }
 
+    /**
+     * @return BelongsTo
+     */
     public function relatedClients(): BelongsTo
     {
         return $this->belongsTo(Client::class, 'client_id');
@@ -37,21 +40,30 @@ class Project extends Model implements HasMedia
     /**
      * @return Model|null
      */
-    public function getRelatedUser(): Model|null
+    public function getRelatedUser(): User|null
     {
         return $this->relatedUser()->first();
     }
 
+    /**
+     * @return BelongsToMany
+     */
     public function relatedCategories(): BelongsToMany
     {
         return $this->belongstoMany(ProjectCategory::class, 'project_project_categories');
     }
 
-    public function getRelatedClients()
+    /**
+     * @return Model|null
+     */
+    public function getRelatedClients(): Client|null
     {
         return $this->relatedClients()->first();
     }
 
+    /**
+     * @return Collection
+     */
     public function getRelatedCategories(): Collection
     {
         return $this->relatedCategories()->get();

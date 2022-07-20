@@ -3,13 +3,16 @@
 namespace App\Http\Services;
 
 use App\Models\Client;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 
 class ClientService
 {
-    public function storeClient(mixed $request){
-        return Client::updateOrCreate(
+    public function storeClient(Client $client, mixed $request): Model|Builder
+    {
+        return $client::query()->updateOrCreate(
             [
-                'id' => $request->id,
+                'id' => $client->id,
             ],[
             'client_name' => $request->get('client_name'),
             'client_desc' => $request->get('client_desc'),
