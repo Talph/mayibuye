@@ -122,30 +122,32 @@ class ClientController extends Controller
      *
      * @param ClientFormRequest $request
      * @param ClientService $clientService
-     * @param MediaFileService $mediaFileService
-     * @param IndustryAttachService $industryAttachService
-     * @param SolutionAttachService $solutionAttachService
+     * @param AttachModelService $attachModelService
      * @return RedirectResponse
      */
-    public function update(ClientFormRequest $request,ClientService $clientService, MediaFileService $mediaFileService,
-                           IndustryAttachService $industryAttachService, SolutionAttachService $solutionAttachService): RedirectResponse
+    public function update(ClientFormRequest $request,ClientService $clientService,
+                           AttachModelService $attachModelService): RedirectResponse
     {
 
         $client = $clientService->storeClient(
             $request
         );
 
+        $attachModelService->attachModel($client, (array)$request->get('industry_id'), 'industries');
+        $attachModelService->attachModel($client, $request->get('solution_id'), 'solutions');
+
+        return redirect()->back()->with('message', 'Successfully updated client');
+    }
+
+    public function uploadLogo (MediaFileService $mediaFileService, Client $client, Request $request){
         // Upload company logo
-        $mediaFileService->fileUpload(
+        $uploaded = $mediaFileService->fileUpload(
             $client,
             $request->file('client_logo'),
             'logos'
         );
 
-        $industryAttachService->attachCategory($client, (array)$request->get('industry_id'));
-        $solutionAttachService->attachSolution($client, $request->get('solution_id'));
-
-        return redirect()->back()->with('message', 'Successfully updated client');
+        return redirect()->back()->with('message', 'Successfully update image');
     }
 
     /**

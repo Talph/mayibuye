@@ -11,11 +11,11 @@ class ClientService
             [
                 'id' => $request->id,
             ],[
-            'client_name' => $request->client_name,
-            'client_desc' => $request->client_desc,
-            'value_added' => $request->value_added,
-            'is_published' => $request->is_published,
-            'user_id' => auth()->user()->id,
+            'client_name' => $request->get('client_name'),
+            'client_desc' => $request->get('client_desc'),
+            'value_added' => $request->get('value_added'),
+            'is_published' => $request->get('is_published') == 1,
+            'user_id' => auth()->id(),
         ]);
     }
 }

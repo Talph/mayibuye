@@ -37,8 +37,8 @@
                                                    autofocus>
                                         </div>
                                         <div class="col-md-4 mt-3">
-                                            <div class="img-container text-center mt-2" id="">
-                                                <img src="{{$client->getFirstMediaUrl('logos')}}" width="150"
+                                            <div class="img-container text-center mt-2" data-toggle="modal" data-target="#uploadModal">
+                                                <img src="{{$client->getLastMediaUrl('logos')}}" width="150"
                                                      alt="{{$client->client_name}}">
                                                 <p>
                                                     click to change
@@ -198,10 +198,12 @@
                                         <div class="form-group row">
                                             <select class="form-control" name="industry_id">
                                                 @foreach($industries as $industry)
-                                                    @foreach ($client->relatedIndustries as $selected)
-                                                        {{ $client->relatedIndustries->isEmpty() || $industry->industry_name != $selected->industry_name ? "" : "selected"}}
-                                                    @endforeach
-                                                    <option value="{{$industry->id}}">{{$industry->industry_name}}</option>
+                                                    <option value="{{$industry->id}}"
+                                                    @foreach($client->relatedIndustries as $clientIndustry)
+                                                        {{str_contains($industry->industry_name, $clientIndustry->industry_name) ? 'selected' : ''}}
+                                                            @endforeach>
+                                                        {{$industry->industry_name}}
+                                                    </option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -245,6 +247,6 @@
     </div>
 
 @endsection
-
+@include('backend.partials.forms.file-change-modal')
 @section('scripts')
 @endsection

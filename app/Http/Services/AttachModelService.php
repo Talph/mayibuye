@@ -18,19 +18,23 @@ class AttachModelService
         if(!$attachments){
             return true;
         }
-
         switch ($attachmentType) {
             case 'categories' :
+                $model->relatedCategories()->detach($model->id);
                 Arr::map($attachments, function ($category) use ($model) {
                     $model->relatedCategories()->attach($category);
                 });
                 break;
             case 'industries' :
-                Arr::map($attachments, function ($industry) use ($model) {
-                    $model->relatedIndustries()->attach($industry);
-                });
+                $detach = $model->relatedIndustries()->detach($model->id);
+                if($detach){
+                    Arr::map($attachments, function ($industry) use ($model) {
+                        $model->relatedIndustries()->attach($industry);
+                    });
+                }
                 break;
             case 'solutions' :
+                $model->relatedSolutions()->detach($model->id);
                 Arr::map($attachments, function ($solution) use ($model) {
                         $model->relatedSolutions()->attach($solution);
                 });
