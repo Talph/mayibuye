@@ -31,21 +31,13 @@
               <tr class="odd">
                 <td>{{ $client->client_name }}</td>
                 <td>{{\Illuminate\Support\Str::limit(strip_tags($client->client_desc, 160)) }}</td>
-                <td><img src="{{$client->getFirstMediaUrl('logos')}}" width="100"></td>
-                  @if($client->is_published == 0)
-                  <span class="draft">
-                    Draft
+                <td><img src="{{$client->getLastMediaUrl('logos')}}" width="40"
+                                                                         alt="{{$client->client_name}}">
+                </td>
+                <td>
+                  <span class="status">
+                    {{$client->is_published == 0 ? 'Draft' : 'Published' ??  'Awaiting approval'}}
                   </span>
-                  @elseif($client->is_published == 1)
-                  <span class="draft">
-                    Published
-                  </span>
-                  @else
-                  <span class="draft">
-                    Awaiting approval
-                  </span>
-                  @endif
-
                 </td>
                 <td>
                   <div class="dropdown no-arrow">
@@ -77,7 +69,7 @@
               <tr>
                 <th>client name</th>
                 <th>Content</th>
-                <th>Status</th>
+                <th>Logo</th>
                 <th></th>
               </tr>
             </tfoot>

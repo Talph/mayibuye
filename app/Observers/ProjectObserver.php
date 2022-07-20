@@ -3,34 +3,34 @@
 namespace App\Observers;
 
 use App\Models\Project;
+use Illuminate\Support\Str;
 
 class ProjectObserver
 {
     /**
-     * Handle the Project "created" event.
+     * Handle the Project "creating" event.
      *
      * @param Project $project
      * @return void
      */
     public function creating(Project $project): void
     {
-            $slug = \Str::slug($project->project_name);
-            $count = Project::whereRaw("slug RLIKE '^{$slug}(-[0-9]+)?$'")->withTrashed()->count();
-            $project->slug = $count ? "{$slug}-{$count}" : $slug;
-
+        $slug = $project->slug ? Str::slug($project->slug) : Str::slug(strtolower($project->project_name));
+        $count = Project::whereNotIn('id', [$project->id])->whereRaw("slug RLIKE '^{$slug}(-[0-9]+)?$'")->withTrashed()->count();
+        $project->slug = $count ? "{$slug}-{$count}" : $slug;
     }
 
     /**
-     * Handle the Project "created" event.
+     * Handle the Project "updating" event.
      *
      * @param Project $project
      * @return void
      */
     public function updating(Project $project): void
     {
-                $slug = \Str::slug($project->slug);
-                $count = Project::whereRaw("slug RLIKE '^{$slug}(-[0-9]+)?$'")->withTrashed()->count();
-                $project->slug = $count ? "{$slug}-{$count}" : $slug;
+        $slug = $project->slug ? Str::slug($project->slug) : Str::slug(strtolower($project->project_name));
+        $count = Project::whereNotIn('id', [$project->id])->whereRaw("slug RLIKE '^{$slug}(-[0-9]+)?$'")->withTrashed()->count();
+        $project->slug = $count ? "{$slug}-{$count}" : $slug;
     }
     /**
      * Handle the Project "created" event.

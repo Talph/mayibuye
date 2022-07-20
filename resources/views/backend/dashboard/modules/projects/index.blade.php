@@ -19,11 +19,11 @@
           <table id="dataTable" class="table table-striped table-bordered" style="width: 100%;">
             <thead>
               <tr>
+                <th>Project number</th>
                 <th>Project name</th>
-                <th>Author</th>
-                <th>Project Description</th>
                 <th>Date</th>
                 <th>Status</th>
+                <th>Author</th>
                 <th>Slug</th>
                 <th></th>
               </tr>
@@ -31,27 +31,13 @@
             <tbody>
               @forelse($projects as $project)
               <tr class="odd">
-                <td>{{ $project->project_name }}</td>
-                <td>{{ $project->getRelatedUser()->name }}</td>
-                <td>{{ \Illuminate\Support\Str::limit($project->project_desc, 160) }}</td>
+                <td>{{ $project->project_number }}</td>
+                <td>{{$project->project_name, 160}}</td>
                 <td>{{ $project->posted_at }}</td>
                 <td>
-
-                  @if($project->is_published == 0)
-                  <span class="draft">
-                    Draft
-                  </span>
-                  @elseif($project->is_published == 1)
-                  <span class="draft">
-                    Published
-                  </span>
-                  @else
-                  <span class="draft">
-                    Awaiting approval
-                  </span>
-                  @endif
-
+                  {{$project->is_published == 0 ? 'Draft' : ( $project->is_published == 1 ? 'Published' : 'Awaiting approval' )}}
                 </td>
+                <td>{{ $project->getRelatedUser()->name }}</td>
                 <td>{{ $project->slug }}</td>
                 <td>
                   <div class="dropdown no-arrow">

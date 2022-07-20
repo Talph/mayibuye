@@ -35,7 +35,7 @@ class Client extends Model implements HasMedia
      */
     public function relatedIndustries(): BelongsToMany
     {
-        return $this->belongsToMany(Industry::class, 'industries_clients', 'client_id');
+        return $this->belongsToMany(Industry::class, 'industries_clients', 'industry_id');
     }
 
     /**
@@ -53,5 +53,12 @@ class Client extends Model implements HasMedia
     {
         $this->addMediaCollection('logos');
         $this->addMediaCollection('project-images');
+    }
+
+    public function getLastMediaUrl(string $value)
+    {
+        return $this->getFirstMedia($value) ? $this->getMedia($value)
+            ->last()
+            ->getUrl() : 'https://avatars.dicebear.com/api/bottts/' . $this->name. '.svg';
     }
 }

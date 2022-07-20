@@ -17,7 +17,7 @@ class ClientService
             'client_name' => $request->get('client_name'),
             'client_desc' => $request->get('client_desc'),
             'value_added' => $request->get('value_added'),
-            'is_published' => $request->get('is_published'),
+            'is_published' => $request->get('is_published') == 1,
             'user_id' => auth()->id(),
         ]);
     }

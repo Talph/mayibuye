@@ -118,6 +118,17 @@ class ClientController extends Controller
         }
 
         return redirect()->back()->with('message', 'Successfully updated client');
+
+    public function uploadLogo (MediaFileService $mediaFileService, Client $client, Request $request){
+        // Upload company logo
+        $uploaded = $mediaFileService->fileUpload(
+            $client,
+            $request->file('client_logo'),
+            'logos'
+        );
+
+        return redirect()->back()->with('message', 'Successfully update image');
+
     }
 
     /**
