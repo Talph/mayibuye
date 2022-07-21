@@ -17,7 +17,7 @@ trait StringCaseTrait
 
     public function stringCapitalizeAllFirstLetters(?string $string): string
     {
-        return ucwords($string);
+        return ucwords(strtolower($string));
     }
 
     public function stringCapitalizeAllLetters(?string $string): string

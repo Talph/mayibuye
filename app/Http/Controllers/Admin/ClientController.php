@@ -62,8 +62,8 @@ class ClientController extends Controller
             $mediaFileService->fileUpload($client, $request->file('example_two'),'project-images'); //Upload example two
             $mediaFileService->fileUpload($client, $request->file('example_three'),'project-images'); //Upload example three
 
-            $attachModelService->attachModel($client, $request->get('industry_id'), 'industries');
-            $attachModelService->attachModel($client, $request->get('solution_id'), 'solutions');
+            $attachModelService->attachModel($client, ['industry' => $request->get('industry_id')], 'industries');
+            $attachModelService->attachModel($client, ['solution' => $request->get('solution_id')], 'solutions');
         }
         catch (Exception $e){
             return redirect()->back()->with('err_message', $e->getMessage());
@@ -112,8 +112,8 @@ class ClientController extends Controller
             $client = $clientService->storeClient($client, $request);
             // Upload company logo
             $mediaFileService->fileUpload($client, $request->file('client_logo'), 'logos');
-            $attachModelService->attachModel($client, (array)$request->get('industry_id'), 'industries');
-            $attachModelService->attachModel($client, $request->get('solution_id'), 'industries');
+            $attachModelService->attachModel($client, ['industry' => $request->get('industry_id')], 'industries');
+            $attachModelService->attachModel($client, ['solution' => $request->get('solution_id')], 'solutions');
         } catch (Exception $e) {
             return redirect()->back()->with('err_message', $e->getMessage());
         }

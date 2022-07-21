@@ -175,10 +175,10 @@
 
                                 <div class="card-body">
                                     <div class="form-group">
-                                        <label>client status</label>
+                                        <label>Status</label>
                                         <select class="form-control" name="is_published">
-                                            <option value="0">Draft</option>
-                                            <option selected value="1">Publish</option>
+                                            <option value="0" {{str_contains($client->is_published, '0') ? 'selected' : ''}}>Draft</option>
+                                            <option value="1" {{str_contains($client->is_published, '1') ? 'selected' : ''}} >Publish</option>
                                         </select>
                                     </div>
 
@@ -197,11 +197,13 @@
                                     <div class="card-body">
                                         <div class="form-group row">
                                             <select class="form-control" name="industry_id">
+                                                <option value="">Select sector</option>
                                                 @foreach($industries as $industry)
                                                     <option value="{{$industry->id}}"
                                                     @foreach($client->relatedIndustries as $clientIndustry)
-                                                        {{str_contains($industry->industry_name, $clientIndustry->industry_name) ? 'selected' : ''}}
-                                                            @endforeach>
+                                                        {{ $client->relatedIndustries->isEmpty() || $industry->industry_name != $clientIndustry->industry_name ? "" : "selected"}}
+                                                    @endforeach
+                                                    >
                                                         {{$industry->industry_name}}
                                                     </option>
                                                 @endforeach

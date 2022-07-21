@@ -19,7 +19,7 @@ class Client extends Model implements HasMedia
     //
     protected $table = 'clients';
     protected $fillable = [
-        'client_name', 'user_id', 'client_desc', 'value_added', 'industry_id', 'slug',
+        'client_name', 'user_id', 'client_desc', 'value_added', 'industry_id', 'slug', 'is_published',
     ];
 
     /**
@@ -27,7 +27,7 @@ class Client extends Model implements HasMedia
      */
     public function relatedSolutions(): BelongsToMany
     {
-        return $this->belongsToMany(Solution::class, 'solutions_clients');
+        return $this->belongsToMany(Solution::class, 'solutions_clients', 'client_id');
     }
 
     /**
@@ -35,7 +35,7 @@ class Client extends Model implements HasMedia
      */
     public function relatedIndustries(): BelongsToMany
     {
-        return $this->belongsToMany(Industry::class, 'industries_clients', 'industry_id');
+        return $this->belongsToMany(Industry::class, 'industries_clients', 'client_id');
     }
 
     /**
