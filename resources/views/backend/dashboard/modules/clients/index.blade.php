@@ -20,7 +20,7 @@
             <thead>
               <tr>
                 <th>Client name</th>
-                <th>Content excert</th>
+                <th>Content summary</th>
                 <th>Logo</th>
                 <th>Status</th>
                 <th></th>
@@ -36,7 +36,7 @@
                 </td>
                 <td>
                   <span class="status">
-                    {{$client->is_published == 0 ? 'Draft' : 'Published' ??  'Awaiting approval'}}
+                    {{($client->is_published == 0 ? 'Draft' : 'Published') ??  'Awaiting approval'}}
                   </span>
                 </td>
                 <td>

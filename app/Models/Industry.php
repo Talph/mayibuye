@@ -10,7 +10,6 @@ class Industry extends Model
     use HasFactory;
     //
     protected $table = 'industries';
-    protected $default = ['id','industry_name','industry_slug','industry_icon','industry_description'];
     protected $fillable = [
         'industry_name','industry_slug','industry_icon','industry_description'
     ];

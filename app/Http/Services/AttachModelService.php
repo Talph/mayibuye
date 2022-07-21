@@ -15,31 +15,22 @@ class AttachModelService
      */
     public function attachModel(Model $model, mixed $attachments, string $attachmentType): bool
     {
+
         if(!$attachments){
 
         return true;
         }
         switch ($attachmentType) {
             case 'categories' :
-                $model->relatedCategories()->detach($model->id);
-                Arr::map($attachments, function ($category) use ($model) {
-                    $model->relatedCategories()->sync($category);
-                });
+                    $model->relatedCategories()->sync($attachments['category']);
                 break;
             case 'industries' :
-
-                Arr::map($attachments, function ($industry) use ($model) {
-                    $model->relatedIndustries()->sync($industry);
-                });
+                    $model->relatedIndustries()->sync($attachments['industry']);
                 break;
             case 'solutions' :
-                $model->relatedSolutions()->detach($model->id);
-                Arr::map($attachments, function ($solution) use ($model) {
-                        $model->relatedSolutions()->sync($solution);
-                });
+                        $model->relatedSolutions()->sync($attachments['solution']);
                 break;
         }
-
         return true;
     }
 }

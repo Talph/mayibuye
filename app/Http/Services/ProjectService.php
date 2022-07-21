@@ -14,7 +14,7 @@ class ProjectService
 
     public function storeProject(Project $project, mixed $request): Model|Builder
     {
-        return $project->updateOrCreate([
+        return $project->query()->updateOrCreate([
             'id' => $project->id
         ], [
             'project_name' => $this->stringCapitalizeFirstLetter($request->get('project_name')),

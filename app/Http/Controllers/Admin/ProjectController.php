@@ -38,10 +38,12 @@ class ProjectController extends Controller
     public function create(): View|Factory|Application
     {
         $this->authorize('create', Project::class);
-        $categories = ProjectCategory::query()->get();
-        $clients = Client::query()->get();
-        $project = [];
-        return view('backend.dashboard.modules.projects.create', [ 'project'=>$project, 'categories' => $categories, 'clients'=>$clients]);
+        return view('backend.dashboard.modules.projects.create',
+            [
+                'project'=> $project ?? [],
+                'categories' => ProjectCategory::query()->get(),
+                'clients' => Client::query()->get()
+            ]);
     }
 
     /**
@@ -59,7 +61,7 @@ class ProjectController extends Controller
         
         try{
             $project = $projectService->storeProject(new Project, $request);
-            $attachModelService->attachModel($project, $request->get('category_id'), 'categories');
+            $attachModelService->attachModel($project, ['category' => $request->get('category_id')], 'categories');
         }
         catch(Exception $e){
         
@@ -79,9 +81,7 @@ class ProjectController extends Controller
     public function edit($id): View
     {
         $this->authorize('edit', Project::class);
-        $project = $project->with(['relatedCategories', 'relatedClients'])->first();
-        // $project = Project::where('id',$id)->with(['relatedCategories', 'relatedClients'])->first();
-
+        $project = Project::query()->where('id', $id)->with(['relatedCategories', 'relatedClients'])->first();
         $categories = ProjectCategory::query()->get(['id', 'category_name']);
         $clients = Client::query()->get(['id', 'client_name']);
         return view('backend.dashboard.modules.projects.edit', [ 'project' => $project, 'categories' => $categories, 'clients' => $clients]);
@@ -104,7 +104,7 @@ class ProjectController extends Controller
 
         try{
             $projectService->storeProject($project, $request);
-            $attachModelService->attachModel($project, $request->get('category_id'), 'categories');
+            $attachModelService->attachModel($project, ['category' => $request->get('category_id')], 'categories');
         }
         catch (Exception $e){
         

@@ -24,7 +24,7 @@ class Project extends Model implements HasMedia
     /**
      * @return BelongsTo
      */
-    public function relatedUser(): BelongsTo
+    public function relatedUsers(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');
     }
@@ -42,7 +42,7 @@ class Project extends Model implements HasMedia
      */
     public function getRelatedUser(): User|null
     {
-        return $this->relatedUser()->first();
+        return $this->relatedUsers()->first();
     }
 
     /**
