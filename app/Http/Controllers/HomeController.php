@@ -7,22 +7,7 @@ use Illuminate\Http\Request;
 class HomeController extends Controller
 {
 
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
-    public function index(Request $request)
-    {
-        $packages = 15014 ;//Package::count();
-        $leads = 1000; //LeadHome::count();
-        $preorders = 100; //PreorderHome::count();
-
-        return view('backend.home', ['packages'=>$packages, 'leads'=>$leads, 'preorders'=>$preorders]);
-    }
-
     public function about(){
-
         return view('website.about');
     }
 

@@ -98,7 +98,7 @@
                              </li>
 
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-dark" data-toggle="dropdown" href="{{ route('about') }}">{{ __('About us') }}</a> 
+                            <a class="nav-link dropdown-toggle text-dark" data-toggle="dropdown" href="{{ route('about') }}">{{ __('About us') }}</a>
                             <div class="dropdown-menu">
                                     <a class="nav-item dropdown-item text-dark" href="{{ route('overview') }}">{{ __('Overview') }}</a>
                                     <a class="nav-item dropdown-item text-dark" href="{{ route('certs') }}">{{ __('Certifications and Memberships') }}</a>
