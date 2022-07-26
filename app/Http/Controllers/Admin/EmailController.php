@@ -14,7 +14,7 @@ class EmailController extends Controller
 
     public function index(): Factory|View|Application
     {
-        $emails = Email::query()->paginate();
+        $emails = Email::query()->paginate(15);
 
         return view('backend.dashboard.modules.emails.index',['emails' => $emails]);
     }
