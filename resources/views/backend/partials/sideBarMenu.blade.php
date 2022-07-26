@@ -4,7 +4,6 @@
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{route('home')}}">
         <div class="sidebar-brand-icon rotate-n-45">
-            {{-- <i class="fas text-fmf fa-laugh-wink"></i> --}}
             <img src="{{asset('images/png/favicon.png')}}" width="40" alt="AfrDash">
         </div>
         <div class="sidebar-brand-text mx-3">AfrDash</div>
@@ -129,21 +128,21 @@
     </li>
     @endcanany
 
-    <li class="nav-item">
+{{--    <li class="nav-item">--}}
 
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseAccount"
-            aria-expanded="true" aria-controls="collapseAccount">
-            <i class="fas fa-cogs fa-fw"></i>
-            <span>Account</span></a>
-        <div id="collapseAccount" class="collapse" aria-labelledby="headingPost" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">Select what you want :</h6>
-                <a class="collapse-item" href="{{route('account.index')}}">Profile</a>
-                <a class="collapse-item" href="{{route('security.index')}}">Security</a>
-                <a class="collapse-item" href="{{route('notifications.index')}}">Notifications</a>
-            </div>
-        </div>
-    </li>
+{{--        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseAccount"--}}
+{{--            aria-expanded="true" aria-controls="collapseAccount">--}}
+{{--            <i class="fas fa-cogs fa-fw"></i>--}}
+{{--            <span>Account</span></a>--}}
+{{--        <div id="collapseAccount" class="collapse" aria-labelledby="headingPost" data-parent="#accordionSidebar">--}}
+{{--            <div class="bg-white py-2 collapse-inner rounded">--}}
+{{--                <h6 class="collapse-header">Select what you want :</h6>--}}
+{{--                <a class="collapse-item" href="{{route('account.index')}}">Profile</a>--}}
+{{--                <a class="collapse-item" href="{{route('security.index')}}">Security</a>--}}
+{{--                <a class="collapse-item" href="{{route('notifications.index')}}">Notifications</a>--}}
+{{--            </div>--}}
+{{--        </div>--}}
+{{--    </li>--}}
 
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">

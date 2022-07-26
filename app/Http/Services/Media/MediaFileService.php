@@ -10,7 +10,7 @@ class MediaFileService
     {
 
         if($file){
-            $model->addMedia($file)
+           $model->addMedia($file)
                 ->toMediaCollection($collectionType);
         }
 

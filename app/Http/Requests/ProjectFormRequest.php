@@ -29,6 +29,7 @@ class ProjectFormRequest extends FormRequest
             'project_status' => 'required',
             'start_date' => 'required|date',
             'end_date' => 'date',
+            'project_value' => 'numeric'
         ];
     }
 }

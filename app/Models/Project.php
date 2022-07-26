@@ -2,7 +2,10 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -19,14 +22,17 @@ class Project extends Model implements HasMedia
     ];
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
-    public function relatedUser(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function relatedUsers(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function relatedClients(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    /**
+     * @return BelongsTo
+     */
+    public function relatedClients(): BelongsTo
     {
         return $this->belongsTo(Client::class, 'client_id');
     }
@@ -34,17 +40,32 @@ class Project extends Model implements HasMedia
     /**
      * @return Model|null
      */
-    public function getRelatedUser(): Model|null
+    public function getRelatedUser(): User|null
     {
-        return $this->relatedUser()->first();
+        return $this->relatedUsers()->first();
     }
 
-    public function relatedCategories() {
+    /**
+     * @return BelongsToMany
+     */
+    public function relatedCategories(): BelongsToMany
+    {
         return $this->belongstoMany(ProjectCategory::class, 'project_project_categories');
     }
 
-    public function getRelatedClients()
+    /**
+     * @return Model|null
+     */
+    public function getRelatedClients(): Client|null
     {
         return $this->relatedClients()->first();
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getRelatedCategories(): Collection
+    {
+        return $this->relatedCategories()->get();
     }
 }

@@ -3,19 +3,24 @@
 namespace App\Http\Services;
 
 use App\Models\Client;
+use App\Traits\StringCaseTrait;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 
 class ClientService
 {
-    public function storeClient(mixed $request){
-        return Client::updateOrCreate(
+    use StringCaseTrait;
+    public function storeClient(Client $client, mixed $request): Model|Builder
+    {
+        return $client::query()->updateOrCreate(
             [
-                'id' => $request->id,
+                'id' => $client->id,
             ],[
-            'client_name' => $request->client_name,
-            'client_desc' => $request->client_desc,
-            'value_added' => $request->value_added,
-            'is_published' => $request->is_published,
-            'user_id' => auth()->user()->id,
+            'client_name' => $this->stringCapitalizeAllFirstLetters($request->get('client_name')),
+            'client_desc' => $this->stringCapitalizeFirstLetter($request->get('client_desc')),
+            'value_added' => $this->stringCapitalizeFirstLetter($request->get('value_added')),
+            'is_published' => $request->get('is_published'),
+            'user_id' => auth()->id(),
         ]);
     }
 }

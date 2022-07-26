@@ -9,25 +9,24 @@
 <body>
     <div class="container">
     <div class="row">
-       
-<div class="col-md-12">
-    <p>
-    <strong>Message:</strong>
-    <br>
-    {{$data[0]['__message']}}
-    </p>
-</div>
 
 <div class="col-md-6">
-{{$data[0]['first__name']}} {{$data[0]['last__name']}}
+{{$first__name}} {{$last__name}}
 </div>
 <div class="col-md-6">
-    <strong>E.</strong> {{$data[0]['__email']}}
+    <strong>E.</strong> {{$__email}}
 </div>
 <div class="col-md-6">
-    <strong>T.</strong> {{$data[0]['__phone']}}
+    <strong>T.</strong> {{$__phone}}
 </div>
 <br/>
+        <div class="col-md-12">
+            <p>
+                <strong>Message:</strong>
+                <br>
+                {{$__message}}
+            </p>
+        </div>
 <br/>
 
 <p> <em>--- Message sent from the website</em></p>

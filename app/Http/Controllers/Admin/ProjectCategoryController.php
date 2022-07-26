@@ -6,105 +6,92 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\CategoryFormRequest;
 use App\Http\Services\CategoryService;
 use App\Models\ProjectCategory;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Str;
 
 class ProjectCategoryController extends Controller
 {
     /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
-    /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Application|Factory|View
      */
-    public function index()
+    public function index(): Application|Factory|View
     {
-        $categories = ProjectCategory::withCount('relatedProjects')->paginate( 20 );
-        return view('backend.dashboard.modules.projects.categories.index', ['categories' => $categories]);
+        return view('backend.dashboard.modules.projects.categories.index', ['categories' => ProjectCategory::withCount('relatedProjects')->paginate( 20 )]);
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Application|Factory|View
      */
-    public function create()
+    public function create(): Application|Factory|View
     {
-        $categories = ProjectCategory::get();
-        return view('backend.dashboard.modules.projects.categories.create', [ 'categories' => $categories]);
+        return view('backend.dashboard.modules.projects.categories.create', [ 'categories' => ProjectCategory::get()]);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param \App\Http\Requests\CategoryFormRequest $request
-     * @return \Illuminate\Http\Response
+     * @param CategoryFormRequest $request
+     * @param CategoryService $categoryService
+     * @return RedirectResponse
      */
-    public function store(CategoryFormRequest $request, CategoryService $categoryService)
+    public function store(CategoryFormRequest $request, CategoryService $categoryService): RedirectResponse
     {
-        $categoryService->storeProject($request);
-        return redirect()->route('categories.index')->with('message', 'Successfully created category');
+        $categoryService->storeProject(new ProjectCategory(), $request);
+        return redirect()->back()->with('message', 'Successfully created category');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param ProjectCategory $projectCategory
+     * @return Application|Factory|View
      */
-    public function show(ProjectCategory $projectCategory)
+    public function show(ProjectCategory $projectCategory): View|Factory|Application
     {
-        $post = $projectCategory->with('user')->first();
-        return view('backend.dashboard.modules.categories.show', [ 'post' => $post ]);
+        return view('backend.dashboard.modules.categories.show', [ 'post' => $projectCategory->with('user')->first() ]);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @return Application|Factory|View
      */
-    public function edit($id)
+    public function edit(int $id): Application|Factory|View
     {
-        $category = ProjectCategory::find($id);
-        return view('backend.dashboard.modules.projects.categories.edit', [ 'category' => $category]);
+        return view('backend.dashboard.modules.projects.categories.edit', [ 'category' => ProjectCategory::findOrFail($id)]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param CategoryFormRequest $request
+     * @param CategoryService $categoryService
+     * @param ProjectCategory $category
+     * @return RedirectResponse
      */
-    public function update(Request $request, $id)
+    public function update(CategoryFormRequest $request, CategoryService $categoryService, ProjectCategory $category): RedirectResponse
     {
-        $category = ProjectCategory::find($id);
-        $slug = Str::slug($request->input('slug'), '-');
-        $category->category_name = $request->input('category_name');
-        $category->category_description = $request->input('category_description');
-        $category->slug = $slug;
-        $category->save();
-        $request->session()->flash('message', 'Successfully edited category');
-        return redirect()->route('categories.index');
+        $categoryService->storeProject($category, $request);
+        return redirect()->back()->with('message', 'Successfully edited category');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @return RedirectResponse
      */
-    public function destroy($id)
+    public function destroy(int $id): RedirectResponse
     {
         $category = ProjectCategory::find($id);
         if($category)

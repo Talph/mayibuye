@@ -2,13 +2,9 @@
 
 use App\Http\Controllers\Admin\BlogCategoryController;
 use App\Http\Controllers\Admin\BlogPostController;
-<<<<<<< Updated upstream
-use App\Http\Controllers\Admin\EmailController;
-=======
 use App\Http\Controllers\Admin\ClientController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\EmailController as EmailAdminController;
->>>>>>> Stashed changes
 use App\Http\Controllers\Admin\ProjectCategoryController;
 use App\Http\Controllers\Admin\RolesController;
 use App\Http\Controllers\Admin\UserController;
@@ -50,8 +46,6 @@ Route::controller(HomeController::class)->group(function(){
     });
 });
 
-<<<<<<< Updated upstream
-
 Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
     Route::prefix('/ad')->group(function () {
         Route::get('/posts/trash', [BlogPostController::class, 'trash'])->name('post.trash');
@@ -63,7 +57,10 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
         Route::resource('roles', RolesController::class);
         Route::resource('users', UserController::class);
         Route::resource('emails', EmailController::class);
-=======
+        Route::post('{client:slug}/client-logo-update', [ClientController::class, 'uploadLogo'])->name('image.store');
+    });
+});
+
 Route::group(['middleware' => ['auth']], function () {
     Route::group(['namespace' => 'Admin'], function () {
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('home');
@@ -79,7 +76,6 @@ Route::group(['middleware' => ['auth']], function () {
             Route::resource('clients', ClientController::class);
             Route::post('{client:slug}/client-logo-update', [ClientController::class, 'uploadLogo'])->name('image.store');
         });
->>>>>>> Stashed changes
     });
 
 

@@ -3,7 +3,7 @@
                     <select class="form-control" name="client_id">
                         <option value="">Select client</option>
                         @forelse($clients as $client)
-                            <option value="{{ $client->id }}">{{$client->client_name}}</option>
+                            <option value="{{ $client->id }}" @if($project){{str_contains($client->client_name, $project->getRelatedClients()->client_name) ? 'selected' : ''}}@endif>{{$client->client_name}}</option>
                         @empty
                             <label for="client">No clients</label><br />
                         @endforelse

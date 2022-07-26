@@ -7,6 +7,7 @@ use App\Models\Email;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class EmailController extends Controller
@@ -31,13 +32,22 @@ class EmailController extends Controller
 
     public function show(Email $email) {
 
+        return view('backend.dashboard.modules.emails.show', ['email' => $email]);
     }
 
     public function edit(Email $email) {
         return view('backend.dashboard.modules.forms.edit', ['email' => $email]);
     }
 
-    public function destroy(Email $email) {
-
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param Email $email
+     * @return RedirectResponse
+     */
+    public function destroy(Email $email): RedirectResponse
+    {
+        $email->delete();
+        return redirect()->route('emails.index')->with('message', 'Successfully deleted');
     }
 }

@@ -5,11 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\EmailFormRequest;
 use App\Http\Services\EmailService;
 use App\Http\Services\Media\MediaFileService;
-use App\Mail\ContactUs;
-use App\Models\Email;
 use App\Traits\EmailSpamFilterTrait;
 use Illuminate\Http\Request;
-use Mail;
 
 class EmailController extends Controller
 {
@@ -20,7 +17,6 @@ class EmailController extends Controller
     {
 
         $this->filterSpamMails($request->get('__message'));
-
         try {
 
             $email = $emailService->storeEmail($request);
@@ -31,12 +27,14 @@ class EmailController extends Controller
                 'email'
             );
 
-            Mail::send(new ContactUs($email));
+            $files = $request->hasFile('__document') ? $request->file('__documemt') : [];
+
+            $emailService->sendEmail($email, $files); // Mail::send(new ContactUs($email, $files));
 
             return \redirect()->back()->with('message', 'Message sent successfully. One of our consultants will get back to you soon.');
 
         } catch (\Exception $e) {
-            return \redirect()->back()->with('err_message', $e->getMessage());
+            return \redirect()->back()->with('err_message', 'Something went wrong, we are busy looking into the issue - '.$e->getMessage()); //
         }
 
     }
