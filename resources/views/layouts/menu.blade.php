@@ -3,7 +3,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Mayibuye i-Afrika Trading is a construction company that delivers high quality, reliable construction services for governmental establishments. In addition, we have broad expertise with commercial clients.">
+    <meta name="description"
+          content="Mayibuye i-Afrika Trading is a construction company that delivers high quality, reliable construction services for governmental establishments. In addition, we have broad expertise with commercial clients.">
     <meta name="keywords" content="Building maintenance,ROAD CONSTRUCTION, BULK WATER, building, Construction">
     <meta name="generator" content="m-iafrika.co.za/">
     <meta name="author" content="Tafara Shamu">
@@ -18,118 +19,138 @@
 
     <title>{{ config('app.name', 'Mayibuye iAfrika') }}</title>
 
-        <!-- favicon -->
-        <link rel="apple-touch-icon" sizes="57x57" href="{{ asset('images/favi/apple-icon-57x57.png') }}">
-        <link rel="apple-touch-icon" sizes="60x60" href="{{ asset('images/favi/apple-icon-60x60.png') }}">
-        <link rel="apple-touch-icon" sizes="72x72" href="{{ asset('images/favi/apple-icon-72x72.png') }}">
-        <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('images/favi/apple-icon-76x76.png') }}">
-        <link rel="apple-touch-icon" sizes="114x114" href="{{ asset('images/favi/apple-icon-114x114.png') }}">
-        <link rel="apple-touch-icon" sizes="120x120" href="{{ asset('images/favi/apple-icon-120x120.png') }}">
-        <link rel="apple-touch-icon" sizes="144x144" href="{{ asset('images/favi/apple-icon-144x144.png') }}">
-        <link rel="apple-touch-icon" sizes="152x152" href="{{ asset('images/favi/apple-icon-152x152.png') }}">
-        <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('images/favi/apple-icon-180x180.png') }}">
-        <link rel="icon" type="image/png" sizes="192x192"  href="{{ asset('images/favi/android-icon-192x192.png') }}">
-        <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('images/favi/favicon-32x32.png') }}">
-        <link rel="icon" type="image/png" sizes="96x96" href="{{ asset('images/favi/favicon-96x96.png') }}">
-        <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('images/favi/favicon-16x16.png') }}">
-        <link rel="manifest" href="/images/favi/manifest.json">
-        <meta name="msapplication-TileColor" content="#ffffff">
-        <meta name="msapplication-TileImage" content="/images/favi/ms-icon-144x144.png">
-        <meta name="theme-color" content="#ffffff">
+    <!-- favicon -->
+    <link rel="apple-touch-icon" sizes="57x57" href="{{ asset('images/favi/apple-icon-57x57.png') }}">
+    <link rel="apple-touch-icon" sizes="60x60" href="{{ asset('images/favi/apple-icon-60x60.png') }}">
+    <link rel="apple-touch-icon" sizes="72x72" href="{{ asset('images/favi/apple-icon-72x72.png') }}">
+    <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('images/favi/apple-icon-76x76.png') }}">
+    <link rel="apple-touch-icon" sizes="114x114" href="{{ asset('images/favi/apple-icon-114x114.png') }}">
+    <link rel="apple-touch-icon" sizes="120x120" href="{{ asset('images/favi/apple-icon-120x120.png') }}">
+    <link rel="apple-touch-icon" sizes="144x144" href="{{ asset('images/favi/apple-icon-144x144.png') }}">
+    <link rel="apple-touch-icon" sizes="152x152" href="{{ asset('images/favi/apple-icon-152x152.png') }}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('images/favi/apple-icon-180x180.png') }}">
+    <link rel="icon" type="image/png" sizes="192x192" href="{{ asset('images/favi/android-icon-192x192.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('images/favi/favicon-32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="96x96" href="{{ asset('images/favi/favicon-96x96.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('images/favi/favicon-16x16.png') }}">
+    <link rel="manifest" href="/images/favi/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/images/favi/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" async></script>
+    <script src="{{ asset('js/app.js') }}"></script>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Proza+Libre&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+    <link href="https://fonts.bunny.net/css2?family=Inter&display=swap" rel="stylesheet">
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
 
     @if(App::environment(['production']))
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-HP5NTY9YF1"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-HP5NTY9YF1"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
 
-        gtag('config', 'G-HP5NTY9YF1');
-    </script>
+            function gtag() {
+                dataLayer.push(arguments);
+            }
+
+            gtag('js', new Date());
+
+            gtag('config', 'G-HP5NTY9YF1');
+        </script>
     @endif
 
-    
+
 </head>
 <body>
-    <div id="app">
-        <div class="fluid-container top-menu">
-<div class="container py-2">
-    <div class="row justify-content-center font-12 text-center">
-        <div class="col-sm-3 text-white col-mb-3"><i class="bi va bi-telephone-inbound"></i> +27 877 016 314</div>
-         <div class="col-sm-3 text-white col-mb-3"><i class="bi va bi-calculator"></i> +27 86 767 2586</div>
-        <div class="col-sm-3 text-white col-mb-3"><i class="bi va bi-check2-circle"></i> B-BBEE LEVEL 1</div>
-    </div>
-</div>
-        </div>
-
-        <nav class="navbar navbar-expand-md navbar-light shadow-sm sticky-top py-1 bg-light">
-            <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    <img src="/images/png/logo.png" width="150" height="50" alt="Mayibuye i-Afrika Trading">
-                </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav mr-auto">
-
-                    </ul>
-
-                    <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ml-auto">
-                        {{-- Menu Links --}}
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" href="{{ route('welcome') }}">{{ __('Home') }}</a>
-                             </li>
-
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-dark" data-toggle="dropdown" href="{{ route('about') }}">{{ __('About us') }}</a>
-                            <div class="dropdown-menu">
-                                    <a class="nav-item dropdown-item text-dark" href="{{ route('overview') }}">{{ __('Overview') }}</a>
-                                    <a class="nav-item dropdown-item text-dark" href="{{ route('certs') }}">{{ __('Certifications and Memberships') }}</a>
-                                    <a class="nav-item dropdown-item text-dark" href="{{ route('director') }}">{{ __('The Director') }}</a>
-                                    {{-- <a class="nav-item dropdown-item text-dark" href="{{ route('team') }}">{{ __('Team') }}</a>                               --}}
-                                </div>
-                        </li>
-
-                            <li class="nav-item">
-                            <a class="nav-link text-dark" href="{{ route('services') }}">{{ __('Services') }}</a>
-                             </li>
-                             <li class="nav-item">
-                                <a class="nav-link text-dark" href="{{ route('projects') }}">{{ __('Projects') }}</a>
-                                 </li>
-                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" href="{{ route('gallery') }}">{{ __('Gallery') }}</a>
-                                     </li>
-                             <li class="nav-item">
-                            <a class="nav-link text-dark" href="{{ route('contact-us') }}">{{ __('Contact us') }}</a>
-                             </li>
-                        <!-- Authentication Links -->
-                    </ul>
+<div id="app" class="position-relative">
+    <div class="fluid-container top-menu position-relative">
+        <div class="container py-2">
+            <div class="row justify-content-center text-white font-12 text-center">
+                <div class="col-sm-3 col-mb-3 h6"><i class="bi va bi-telephone-inbound"></i> +27 877 016 314
                 </div>
+                <div class="col-sm-3 col-mb-3 h6"><i class="bi va bi-calculator"></i> +27 86 767 2586</div>
+                <div class="col-sm-3 col-mb-3 h6"><i class="bi va bi-check2-circle"></i> B-BBEE LEVEL 1</div>
+                <div class="col-sm-3 col-mb-3 h6"><i class="bi va bi-check2-circle"></i> Grade 9CE PE</div>
             </div>
-        </nav>
-
-        <main class="py-0">
-            @yield('content')
-        </main>
+        </div>
     </div>
 
-    @yield('scripts')
+    <nav class="custom-menu navbar navbar-expand-md navbar-dark text-white py-1">
+        <div class="container">
+            <a class="navbar-brand @if(request()->route()->named('contact-us')) bg-gray-200 @endif" href="{{ url('/') }}">
+                <img src="{{asset('/images/png/m-logo.png')}}" width="65" height="65" alt="Mayibuye i-Afrika Trading">
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent" aria-expanded="false"
+                    aria-label="{{ __('Toggle navigation') }}">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <!-- Left Side Of Navbar -->
+                <ul class="navbar-nav mr-auto">
+
+                </ul>
+
+                <!-- Right Side Of Navbar -->
+                <ul class="navbar-nav ml-auto navbar-dark @if(request()->route()->named('contact-us'))contact-nav @endif text-uppercase">
+                    {{-- Menu Links --}}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('welcome') }}">{{ __('Home') }}</a>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle " data-toggle="dropdown"
+                           href="{{ route('about') }}">{{ __('About us') }}</a>
+                        <div class="dropdown-menu">
+                            <a class="nav-item dropdown-item text-dark"
+                               href="{{ route('overview') }}">{{ __('Overview') }}</a>
+                            <a class="nav-item dropdown-item text-dark"
+                               href="{{ route('certs') }}">{{ __('Certifications and Memberships') }}</a>
+                            <a class="nav-item dropdown-item text-dark"
+                               href="{{ route('director') }}">{{ __('The Director') }}</a>
+                        </div>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('services') }}">{{ __('Services') }}</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle " data-toggle="dropdown" href="{{ route('projects') }}">{{ __('Projects') }}</a>
+                        <div class="dropdown-menu">
+                            <a class="nav-item dropdown-item text-dark"
+                               href="{{ route('building') }}">{{ __('Building') }}</a>
+                            <a class="nav-item dropdown-item text-dark"
+                               href="{{ route('structures') }}">{{ __('Civil Engineering Structures') }}</a>
+                            <a class="nav-item dropdown-item text-dark"
+                               href="{{ route('roads') }}">{{ __('Civil Engineering Roads & Earthworks') }}</a>
+                            <a class="nav-item dropdown-item text-dark"
+                               href="{{ route('ongoing') }}">{{ __('Ongoing Projects') }}</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('contact-us') }}">{{ __('Contact us') }}</a>
+                    </li>
+                    <!-- Authentication Links -->
+                </ul>
+            </div>
+        </div>
+    </nav>
+    @if(!request()->route()->named('contact-us'))
+        @include('partials.banners.hero')
+    @endif
+
+    @include('partials.quick-contact')
+    <main class="py-0">
+        @yield('content')
+    </main>
+</div>
+
+@yield('scripts')
 </body>
 </html>

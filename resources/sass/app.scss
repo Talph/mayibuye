@@ -1,8 +1,15 @@
 // Fonts
-@import url('https://fonts.googleapis.com/css?family=Nunito');
+@import url('https://fonts.bunny.net/css?family=Poppins');
 
 // Variables
 @import 'variables';
 
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
+@import '~bootstrap-icons/font/bootstrap-icons.min.css';
+@import '~lightbox2/src/css/lightbox.css';
+
+// Styles
+@import 'dash.min.css';
+@import 'styles';
+@import "slick.css";

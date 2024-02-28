@@ -35,17 +35,17 @@
     <meta property="og:url" content="https://m-iafika.co.za/">
     <meta property="og:type" content="website">
 
+    <!-- Custom fonts for this template-->
+
+    <!-- Scripts -->
+    <script src="{{ asset('js/app.js') }}"></script>
+
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link
-            href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-            rel="stylesheet">
+    <link href="https://fonts.bunny.net/css2?family=Inter&display=swap" rel="stylesheet">
 
-    <!-- Custom fonts for this template-->
-    <link href="{{ asset('vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
-
-    <!-- Page level plugin CSS-->
-    <link href="{{ asset('css/dash.min.css') }}" rel="stylesheet">
+    <!-- Styles -->
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
 </head>
 
@@ -66,12 +66,12 @@
         </div>
     </div>
 </div>
-<!-- Scripts -->
-<script src="{{ asset('js/app.js') }}"></script>
-<script src="{{ asset('js/dash.min.js') }}"></script>
+{{--<!-- Scripts -->--}}
+{{--<script src="{{ asset('js/app.js') }}"></script>--}}
+{{--<script src="{{ asset('js/dash.min.js') }}"></script>--}}
 
-<!-- Core plugin JavaScript-->
-<script src="{{ asset('vendor/jquery-easing/jquery.easing.min.js')}}"></script>
+{{--<!-- Core plugin JavaScript-->--}}
+{{--<script src="{{ asset('vendor/jquery-easing/jquery.easing.min.js')}}"></script>--}}
 @yield('scripts')
 
 

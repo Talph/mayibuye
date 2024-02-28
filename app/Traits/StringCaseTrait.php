@@ -4,7 +4,6 @@ namespace App\Traits;
 
 trait StringCaseTrait
 {
-
     public function stringCapitalizeFirstLetter(?string $string): string
     {
         return ucfirst(strtolower($string));

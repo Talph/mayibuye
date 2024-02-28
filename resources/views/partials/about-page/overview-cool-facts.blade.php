@@ -1,71 +1,26 @@
-<!-- Header -->
-<header class="app_gradient mb-4">
-    <div class="container">
-      <h4 class="font-weight-light text-muted">SOME COOL FACTS</h4>
-    </div>
-    <div class="container">
-    <div class="row">
-    <div class="col-md-3">
-        <div class="cool-facts">
-            <h2 class="blockqoute">
-                We believe numbers speak for themselves
+<div class="container">
+
+    <div class="row mt-5">
+        <div class="col-xl-12 col-md-12 mb-4 text-justify">
+            <h2 class="h2 text-center">
+                Quality comes first!
             </h2>
+            <p>Mayibuye is renowned for its unwavering commitment to delivering quality work. Our highly skilled team,
+                top-tier materials, and cutting-edge technology ensure precision and durability in every project.
+                Safety, transparency, and sustainability are integral to our quality promise, making us a trusted leader
+                in the construction industry.</p>
+            <p>Our dedication to quality work extends to our rigorous quality control processes. At Mayibuye, we
+                maintain stringent standards at every stage of a project, from initial planning to final execution. Our
+                quality assurance measures include regular inspections, performance assessments, and client feedback.
+                This meticulous attention to detail allows us to identify and address any potential issues promptly,
+                ensuring that our work consistently meets or exceeds expectations.</p>
+            <h2 class="text-center ">Our People</h2>
+            <p> We are a company that takes pride in its 'family' culture and actively seeks out high-caliber
+                individuals. At our core, we embrace a team philosophy that manifests itself daily, fostering a genuine
+                sense of unity and support among our vast skilled manpower, subcontractors, and engineers. We are
+                dedicated to nurturing the skills and talents of our team members and providing them with opportunities
+                for personal and professional growth, which ultimately allows us to offer a comprehensive one-stop
+                solution for all building and construction needs, regardless of scale.</p>
         </div>
-        </div>    
-        <div class="col-md-3">
-            <h1 class="display-4 text-white">
-                10
-            </h1>
-            <p class="h4 text-white">Current Projects</p>
-        </div> 
-        <div class="col-md-3">
-            <h1 class="display-4 text-white">
-                10
-            </h1>
-            <p class="h4 text-white">Years of Experience</p>
-        </div> 
-        <div class="col-md-3">
-            <h1 class="display-4 text-white">
-                52
-            </h1>
-            <p class="h4 text-white">Completed Projects</p>
-        </div> 
-    </div>    
     </div>
-
-  </header>
-
-  <div class="container mt-5">
-      <div class="row">
-          <div class="col-md-12">
-<p class="h2">
-    Quality comes first! We make sure that every minute detail is looked into while constructing even the smallest project. Our focus is 100% on client needs and satisfaction.
-  </p>   
-  </div>
-  </div>   
 </div>
-  <!-- Page Content -->
-  <div class="container">
-
-    <div class="row mt-4">
-      <!-- Team Member 1 -->
-      <div class="col-xl-4 col-md-6 mb-4">
-          <h2 class="font-weight h-height">Certifications & Memberships</h2>
-        <p>Mayibuye i-Afrika Trading is among the leaders in the industry with relevant certifications and memberships. Mayibuye i-Afrika Trading is a member of respected industry Associations.</p>
-        <p>Mayibuye i-Afrika Trading has been certified for the following relevant governing boards: – Construction Industry Development Board – CIDB Our CIDB Grading is as follows: – 8CE PE Our grading allows us to undertake construction works under 7GB PE.</p>
-      </div>
-      <!-- Team Member 2 -->
-      <div class="col-xl-4 col-md-6 mb-4">
-        <h2 class="font-weight h-height">Our People</h2>
-        <p> We are a company that prides itself on its ‘family’ culture and we seek out high-caliber people. We are a company that has, at its core, a team philosophy that is clearly apparent each and every day – there is a real sense of being With our vast skilled manpower, there for one another. subcontractors and engineers, We believe in nurturing we provide a complete one skills of our team members stop solution for all building and providing growing levels works, small or large. of responsibility.</p>
-      </div>
-      <!-- Team Member 3 -->
-      <div class="col-xl-4 col-md-6 mb-4">
-        <h2 class="text-danger">We are the contractors you can trust.</h2>
-      </div>
-      
-    </div>
-    <!-- /.row -->
-  
-  </div>
-  <!-- /.container -->

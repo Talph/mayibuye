@@ -7,6 +7,8 @@
 require('./bootstrap');
 //import vue
 import Vue from 'vue';
+import 'slick-carousel/slick/slick.min';
+import 'lightbox2/src/js/lightbox'
 
 /**
  * The following block of code may be used to automatically register your
