@@ -12,6 +12,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Admin\ProjectController as ProjectAdminController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\UserDetailsController;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -31,7 +32,21 @@ Route::get('/', function () {
     return view('website.welcome');
 })->name('welcome');
 
-Route::get('projects', [ProjectController::class, 'index'])->name('projects');
+Route::get('storage-link', function() {
+    Artisan::call('storage:link');
+    echo "link created";
+});
+
+Route::controller(ProjectController::class)->group(function(){
+    Route::prefix('/projects')->group(function () {
+        Route::get('/', 'index')->name('projects');
+        Route::get('building', 'building')->name('building');
+        Route::get('civil-engineering-structures', 'structures')->name('structures');
+        Route::get('civil-engineering-roads-and-earthworks', 'roads')->name('roads');
+        Route::get('ongoing-projects', 'ongoing')->name('ongoing');
+    });
+});
+
 Route::controller(HomeController::class)->group(function(){
     Route::get('services','services')->name('services');
     Route::get('gallery', 'gallery')->name('gallery');

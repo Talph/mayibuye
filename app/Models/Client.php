@@ -57,8 +57,10 @@ class Client extends Model implements HasMedia
 
     public function getLastMediaUrl(string $value)
     {
-        return $this->getFirstMedia($value) ? $this->getMedia($value)
-            ->last()
-            ->getUrl() : 'https://avatars.dicebear.com/api/bottts/' . $this->name. '.svg';
+        return $this->getFirstMedia($value)
+            ? $this->getMedia($value)
+                ->last()
+                ->getUrl()
+            : 'https://avatars.dicebear.com/api/bottts/' . $this->name . '.svg';
     }
 }
